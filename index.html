@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Formulir Resume</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 15px;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .preview-btn { background: #007bff; }
+    .add-btn { background: #17a2b8; font-size: 14px; }
+    .delete-btn {
+      background: #dc3545;
+      padding: 6px 12px;
+      font-size: 14px;
+      color: white;
+    }
+    .edu-group, .exp-group, .skill-group {
+      margin-bottom: 15px;
+    }
+    .year-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 5px;
+    }
+    #progressContainer {
+      margin-top: 10px;
+      display: none;
+    }
+    #progressBackground {
+      width: 100%;
+      background: #e0e0e0;
+      border-radius: 4px;
+    }
+    #progressBar {
+      height: 8px;
+      width: 0%;
+      background: #007bff;
+      border-radius: 4px;
+    }
+    #statusMessage {
+      margin-top: 10px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+    .success { color: green; }
+    .error { color: red; }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/compressorjs@1.0.7/dist/compressor.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h2>Formulir Resume Konselor Keluarga</h2>
+    <form id="cvForm">
+      <label for="name">Nama Lengkap</label>
+      <input type="text" id="name" required />
+
+      <label for="dob">Tempat/Tanggal Lahir</label>
+      <input type="text" id="dob" placeholder="Contoh: Jakarta, 01 Januari 1990" required />
+
+      <label for="gender">Jenis Kelamin</label>
+      <select id="gender" required>
+        <option value="Laki-laki">Laki-laki</option>
+        <option value="Perempuan">Perempuan</option>
+      </select>
+
+      <label for="religion">Agama</label>
+      <input type="text" id="religion" required />
+
+      <label for="nationality">Kewarganegaraan</label>
+      <input type="text" id="nationality" required />
+
+      <label for="email">Email</label>
+      <input type="email" id="email" required />
+
+      <label for="phone">Nomor HP</label>
+      <input type="tel" id="phone" />
+
+      <label for="address">Alamat</label>
+      <textarea id="address" rows="2"></textarea>
+
+      <label for="about">Tentang Saya</label>
+      <textarea id="about" rows="3"></textarea>
+
+      <label>Pendidikan</label>
+      <div id="educationContainer" style="display: none;"></div>
+      <button type="button" class="add-btn" onclick="addEducation()">+ Tambah Pendidikan</button>
+
+      <label>Pengalaman Kerja</label>
+      <div id="experienceContainer" style="display: none;"></div>
+      <button type="button" class="add-btn" onclick="addExperience()">+ Tambah Pengalaman</button>
+
+      <label for="skills">Keahlian</label>
+      <div id="skillsContainer" style="display: none;"></div>
+      <button type="button" class="add-btn" onclick="addSkill()">+ Tambah Keahlian</button>
+
+      <label for="certification">Sertifikasi</label>
+      <textarea id="certification" rows="2"></textarea>
+
+      <label for="membership">Keanggotaan</label>
+      <textarea id="membership" rows="2"></textarea>
+
+      <label for="photo">Upload Foto Profil</label>
+      <input type="file" id="photo" accept="image/*" />
+
+      <div id="progressContainer">
+        <div id="progressBackground">
+          <div id="progressBar"></div>
+        </div>
+      </div>
+      <div id="statusMessage"></div>
+
+      <button type="button" class="preview-btn" id="previewBtn">Preview</button>
+    </form>
+  </div>
+
+  <script>
+    let imageBase64 = "";
+    let experienceIndex = 0;
+    let educationIndex = 0;
+    let skillIndex = 0;
+
+    function addSkill() {
+      const container = document.getElementById("skillsContainer");
+      container.style.display = "block";
+
+      const group = document.createElement("div");
+      group.className = "skill-group";
+      group.id = `skill-group-${skillIndex}`;
+      group.style.display = "flex";
+      group.style.gap = "10px";
+      group.style.alignItems = "center";
+
+      const input = document.createElement("input");
+      input.type = "text";
+      input.name = `skill_${skillIndex}`;
+      input.placeholder = "Keahlian";
+      input.style.flex = "1";
+
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "delete-btn";
+      button.innerHTML = '<i class="fas fa-trash"></i>';
+      const currentIndex = skillIndex;
+      button.onclick = function () {
+        deleteSkill(currentIndex);
+      };
+
+      group.appendChild(input);
+      group.appendChild(button);
+      container.appendChild(group);
+      skillIndex++;
+    }
+
+    function deleteSkill(index) {
+      const group = document.getElementById(`skill-group-${index}`);
+      if (group) group.remove();
+    }
+
+    function addEducation() {
+      const container = document.getElementById("educationContainer");
+      container.style.display = "block";
+
+      const group = document.createElement("div");
+      group.className = "edu-group";
+      group.id = `edu-group-${educationIndex}`;
+      group.style.display = "flex";
+      group.style.flexDirection = "column";
+      group.style.gap = "10px";
+      group.style.marginBottom = "20px";
+
+      group.innerHTML = `
+        <div style="display:flex; align-items:center; gap:10px;">
+          <input type="text" name="edu_name_${educationIndex}" placeholder="Nama Sekolah / Universitas" style="flex:1;" />
+          <button type="button" class="delete-btn" onclick="deleteEducation(${educationIndex})">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+        <div class="year-group">
+          <input type="number" name="edu_start_${educationIndex}" placeholder="Tahun Masuk" />
+          <input type="number" name="edu_end_${educationIndex}" placeholder="Tahun Lulus" />
+        </div>
+      `;
+      container.appendChild(group);
+      educationIndex++;
+    }
+
+    function deleteEducation(index) {
+      const group = document.getElementById(`edu-group-${index}`);
+      if (group) group.remove();
+    }
+
+    function addExperience() {
+      const container = document.getElementById("experienceContainer");
+      container.style.display = "block";
+
+      const group = document.createElement("div");
+      group.className = "exp-group";
+      group.id = `exp-group-${experienceIndex}`;
+      group.style.display = "flex";
+      group.style.flexDirection = "column";
+      group.style.gap = "10px";
+      group.style.marginBottom = "20px";
+
+      group.innerHTML = `
+        <div style="display:flex; align-items:center; gap:10px;">
+          <input type="text" name="company_${experienceIndex}" placeholder="Nama Perusahaan" style="flex:1;" />
+          <button type="button" class="delete-btn" onclick="deleteExperience(${experienceIndex})">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+        <input type="text" name="position_${experienceIndex}" placeholder="Jabatan" />
+        <div class="year-group">
+          <input type="number" name="exp_start_${experienceIndex}" placeholder="Tahun Masuk" />
+          <input type="number" name="exp_end_${experienceIndex}" placeholder="Tahun Selesai" />
+        </div>
+      `;
+      container.appendChild(group);
+      experienceIndex++;
+    }
+
+    function deleteExperience(index) {
+      const group = document.getElementById(`exp-group-${index}`);
+      if (group) group.remove();
+    }
+
+    document.getElementById("photo").addEventListener("change", handleImageUpload);
+    document.getElementById("previewBtn").addEventListener("click", function () {
+      saveAndRedirect();
+    });
+
+    function handleImageUpload() {
+      const file = document.getElementById("photo").files[0];
+      const progressBar = document.getElementById("progressBar");
+      const statusMessage = document.getElementById("statusMessage");
+      const progressContainer = document.getElementById("progressContainer");
+
+      if (file) {
+        const allowed = ['image/jpeg', 'image/png'];
+        if (!allowed.includes(file.type)) {
+          statusMessage.textContent = "Format gambar tidak didukung.";
+          statusMessage.className = "error";
+          return;
+        }
+
+        progressContainer.style.display = "block";
+        progressBar.style.width = "0%";
+
+        new Compressor(file, {
+          quality: 0.6,
+          success(result) {
+            const reader = new FileReader();
+            reader.onprogress = (e) => {
+              if (e.lengthComputable) {
+                const percent = (e.loaded / e.total) * 100;
+                progressBar.style.width = percent + "%";
+              }
+            };
+            reader.onloadend = () => {
+              imageBase64 = reader.result;
+              progressBar.style.width = "100%";
+              statusMessage.textContent = "Gambar berhasil diunggah!";
+              statusMessage.className = "success";
+            };
+            reader.onerror = () => {
+              statusMessage.textContent = "Gagal mengunggah gambar.";
+              statusMessage.className = "error";
+            };
+            reader.readAsDataURL(result);
+          },
+          error() {
+            statusMessage.textContent = "Gagal memproses gambar.";
+            statusMessage.className = "error";
+          }
+        });
+      }
+    }
+
+    function saveAndRedirect() {
+      const skillList = [];
+      const experienceList = [];
+      const educationList = [];
+
+      for (let i = 0; i < skillIndex; i++) {
+        const skill = document.querySelector(`[name="skill_${i}"]`);
+        if (skill) skillList.push(skill.value);
+      }
+
+      for (let i = 0; i < experienceIndex; i++) {
+        const company = document.querySelector(`[name="company_${i}"]`);
+        const position = document.querySelector(`[name="position_${i}"]`);
+        const start = document.querySelector(`[name="exp_start_${i}"]`);
+        const end = document.querySelector(`[name="exp_end_${i}"]`);
+        if (company && position && start && end) {
+          experienceList.push({
+            company: company.value,
+            position: position.value,
+            start: start.value,
+            end: end.value
+          });
+        }
+      }
+
+      for (let i = 0; i < educationIndex; i++) {
+        const name = document.querySelector(`[name="edu_name_${i}"]`);
+        const start = document.querySelector(`[name="edu_start_${i}"]`);
+        const end = document.querySelector(`[name="edu_end_${i}"]`);
+        if (name && start && end) {
+          educationList.push({
+            name: name.value,
+            start: start.value,
+            end: end.value
+          });
+        }
+      }
+
+      const data = {
+        name: document.getElementById("name").value,
+        dob: document.getElementById("dob").value,
+        gender: document.getElementById("gender").value,
+        religion: document.getElementById("religion").value,
+        nationality: document.getElementById("nationality").value,
+        email: document.getElementById("email").value,
+        phone: document.getElementById("phone").value,
+        address: document.getElementById("address").value,
+        about: document.getElementById("about").value,
+        skills: skillList,
+        education: educationList,
+        experience: experienceList,
+        certification: document.getElementById("certification").value,
+        membership: document.getElementById("membership").value,
+        photo: imageBase64
+      };
+
+      localStorage.setItem("resumeData", JSON.stringify(data));
+      window.location.href = "resume - Copy.html";
+    }
+  </script>
+</body>
+</html>
