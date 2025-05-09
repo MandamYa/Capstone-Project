@@ -138,35 +138,47 @@ function removeInlineError(inputElem) {
     function deleteSkill(index) {
       const group = document.getElementById(`skill-group-${index}`);
       if (group) group.remove();
-    }
+    };
   
-    function addEducation() {
-      const container = document.getElementById("educationContainer");
-      container.style.display = "block";
-  
-      const group = document.createElement("div");
-      group.className = "edu-group";
-      group.id = `edu-group-${educationIndex}`;
-      group.style.display = "flex";
-      group.style.flexDirection = "column";
-      group.style.gap = "10px";
-      group.style.marginBottom = "20px";
-  
-      group.innerHTML = `
-        <div style="display:flex; align-items:center; gap:10px;">
-          <input type="text" name="edu_name_${educationIndex}" placeholder="Nama Sekolah / Universitas" style="flex:1;" />
-          <button type="button" class="delete-btn" onclick="deleteEducation(${educationIndex})">
-            <i class="fas fa-trash"></i>
-          </button>
-        </div>
-        <div class="year-group">
-          <input type="number" name="edu_start_${educationIndex}" placeholder="Tahun Masuk" />
-          <input type="number" name="edu_end_${educationIndex}" placeholder="Tahun Lulus" />
-        </div>
-      `;
-      container.appendChild(group);
-      educationIndex++;
-    }
+const educationPlaceholders = [
+  "Masukkan nama SD",
+  "Masukkan nama SMP",
+  "Masukkan nama SMA",
+  "Masukkan nama Universitas",
+  "Masukkan nama Pendidikan Lainnya"
+];
+
+function addEducation() {
+  const container = document.getElementById("educationContainer");
+  container.style.display = "block";
+
+  const placeholder = educationPlaceholders[educationIndex] || "Masukkan nama Institusi";
+
+  const group = document.createElement("div");
+  group.className = "edu-group";
+  group.id = `edu-group-${educationIndex}`;
+  group.style.display = "flex";
+  group.style.flexDirection = "column";
+  group.style.gap = "10px";
+  group.style.marginBottom = "20px";
+
+  group.innerHTML = `
+    <div style="display:flex; align-items:center; gap:10px;">
+      <input type="text" name="edu_name_${educationIndex}" placeholder="${placeholder}" style="flex:1;" />
+      <button type="button" class="delete-btn" onclick="deleteEducation(${educationIndex})">
+        <i class="fas fa-trash"></i>
+      </button>
+    </div>
+    <div class="year-group">
+      <input type="number" name="edu_start_${educationIndex}" placeholder="Tahun Masuk" />
+      <input type="number" name="edu_end_${educationIndex}" placeholder="Tahun Lulus" />
+    </div>
+  `;
+
+  container.appendChild(group);
+  educationIndex++;
+}
+
   
     function deleteEducation(index) {
       const group = document.getElementById(`edu-group-${index}`);

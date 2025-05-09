@@ -315,13 +315,6 @@
     .error { color: red; }
 
     /*preview2_style_css/*/
-        .scroll-wrapper {
-      width: 100vw;
-      overflow: auto;
-      height: 100vh;
-      padding: 20px 0;
-      box-sizing: border-box;
-    }
     .a4-container {
       width: 210mm;
       height: 297mm;
