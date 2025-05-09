@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Resume Preview</title>
+  <link rel="stylesheet" type="text/css" href="css/font.css" >
+  <link rel="stylesheet" type="text/css" href="css/style_preview.css">
+</head>
+<body>
+  <div class="resume-container" id="capture">
+    <div class="left-column">
+      <img id="resume-photo" src="default.jpg" alt="Foto Profil" />
+
+      <div class="data-diri">
+        <h2>DATA DIRI</h2>
+        <p><strong>Nama:</strong><br> <span id="resume-name"></span></p>
+        <p><strong>Tempat, Tanggal Lahir:</strong><br> <span id="resume-ttl"></span></p>
+        <p><strong>Jenis Kelamin:</strong><br> <span id="resume-gender"></span></p>
+        <p><strong>Agama:</strong><br> <span id="resume-religion"></span></p>
+        <p><strong>Kewarganegaraan:</strong><br> <span id="resume-nationality"></span></p>
+      </div>
+
+      <div class="contact-info">
+        <h2>KONTAK</h2>
+        <p><span>📞</span><span id="resume-phone"></span></p>
+        <p><span>✉️</span><span id="resume-email"></span></p>
+        <p><span>📍</span><span id="resume-address"></span></p>
+      </div>
+    </div>
+
+    <div class="right-column">
+      <h1 id="resume-nameh1"></h1>
+
+      <div class="section">
+        <h2>TENTANG SAYA</h2>
+        <p><span id="resume-about"></span></p>
+      </div>
+
+      <div class="section">
+        <h2>PENDIDIKAN</h2>
+        <ul id="resume-education" class="education-list"></ul>
+      </div>
+
+      <div class="section">
+        <h2>PENGALAMAN KERJA</h2>
+        <ul id="resume-experience" class="experience-list"></ul>
+      </div>
+
+      <div class="section">
+        <h2>KEAHLIAN</h2>
+        <ul id="resume-skills"></ul>
+      </div>
+    </div>
+  </div>
+   <!-- Tombol Preview -->
+   <button id="previewBtn" onclick="window.location.href='preview2.html'">👁️ Lihat Preview2</button>
+  <div class="color-tools">
+    <label>
+      Warna Kolom Kiri:
+      <input type="color" id="left-col-bg-color" value="#f1eae4" />
+    </label>
+    <label>
+      Warna Kolom Kanan:
+      <input type="color" id="right-col-bg-color" value="#f9f9f9" />
+    </label>
+    <label>
+      Warna Teks Kolom Kiri:
+      <input type="color" id="left-text-color" value="#000000" />
+    </label>
+    <label>
+      Warna Teks Kolom Kanan:
+      <input type="color" id="right-text-color" value="#000000" />
+    </label>
+    <label>
+      Warna Badge:
+      <input type="color" id="badge-color" value="#e6ccb2" />
+    </label>
+    <button onclick="resetColors()">🔄 Reset Warna</button>
+  </div>
+
+  <div class="download-button">
+    <button onclick="downloadImage()">Download sebagai Gambar</button>
+  </div>
+
+  <script src="js/canvas.js"></script>
+  <script src="js/function1.js"></script>
+  <script src="js/unduhgambar.js"></script>
+</body>
+</html>

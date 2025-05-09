@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CV Roos Maas</title>
+  <link rel="stylesheet" type="text/css" href="css/font.css">
+  <link rel="stylesheet" type="text/css" href="css/style_preview.css">
+</head>
+<body>
+  <div class="scroll-wrapper">
+    <div class="a4-container" id="capture">
+      <div class="header">
+        <div class="header-content">
+          <h1><span id="resume-name1"></span></h1>
+          <h2>KONTAK</h2>
+          <div class="contact-info">
+            <span>📞 <span id="resume-phone"></span></span>
+            <span>✉️ <span id="resume-email"></span></span><br>
+          </div>
+        </div>
+        <img class="profile-pic" id="resume-photo" src="default.jpg" alt="Foto Profil" />
+      </div>
+      <div class="main-content">
+        <div class="left-column">
+          <div class="section education">
+            <h3>DATA DIRI</h3>
+            <p><strong>Tempat, Tanggal Lahir:</strong><br> <span id="resume-ttl"></span></p>
+            <p><strong>Jenis Kelamin:</strong><br> <span id="resume-gender"></span></p>
+            <p><strong>Agama:</strong><br> <span id="resume-religion"></span></p>
+            <p><strong>Kewarganegaraan:</strong><br> <span id="resume-nationality"></span></p>
+            <p><strong>Alamat:</strong><br><span>📍 <span id="resume-address"></span></span>
+          </div>
+        </div>
+        <div class="right-column">
+          <div class="section">
+            <h3>TENTANG SAYA</h3>
+            <p id="resume-about"></p>
+          </div>
+          <div class="section experience">
+            <h3>PENGALAMAN KERJA</h3>
+            <ul id="resume-experience"></ul>
+          </div>
+          <div class="section education">
+            <h3>PENDIDIKAN</h3>
+            <ul id="resume-education"></ul>
+          </div>
+          <div class="section skills">
+            <h3>KEAHLIAN</h3>
+            <ul id="resume-skills"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tombol Preview -->
+    <button id="previewBtn" onclick="window.location.href='preview1.html'">👁️ Lihat Preview1</button>
+
+    <!-- Panel Warna -->
+    <div class="color-tools">
+      <label>Warna Kolom Kiri:
+        <input type="color" id="leftColumnColor" value="#ffffff"/>
+      </label>
+      <label>Warna Kolom Kanan:
+        <input type="color" id="rightColumnColor" value="#ffffff"/>
+      </label>
+      <label>Warna Header:
+        <input type="color" id="headerColor" value="#3c3c3c"/>
+      </label>
+      <label>Warna Halaman:
+        <input type="color" id="a4containerColor" value="#ffffff"/>
+      </label>
+      <label>
+        Warna Teks Kolom Kiri:
+        <input type="color" id="left-text-color" value="#000000" />
+      </label>
+      <label>
+        Warna Teks Kolom Kanan:
+        <input type="color" id="right-text-color" value="#000000" />
+      </label>
+      <label>Warna Garis Judul:
+        <input type="color" id="sectionH3Color" value="#000000"/>
+      </label>
+      <button id="resetBtn" onclick="resetColors()">🔄 Reset Warna</button>
+    </div>
+
+    <!-- Tombol Download --><div class="download-button">
+    <button id="downloadBtn" onclick="downloadImage()">Download sebagai Gambar</button>
+  </div>
+
+  <script src="js/canvas.js"></script>
+  <script src="js/unduhgambar.js"></script>
+  <script src="js/function2.js"></script>
+</body>
+</html>
