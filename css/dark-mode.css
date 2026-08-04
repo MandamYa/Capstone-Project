@@ -1,0 +1,422 @@
+/*
+ * DARK MODE STYLES: REVISI KOMPREHENSIF AKHIR
+ * File: dark-mode.css
+ * Memastikan SEMUA elemen, termasuk input file dan kontainer utama, 
+ * terinversi warnanya.
+ */
+
+/* WARNA DASAR DARK MODE */
+/* Body BG: #121212 */
+/* Kontainer BG: #1E1E1E */
+/* Input/Header Table BG: #2C2C2C */
+/* Border: #3E3E3E */
+/* Teks Primer: #E0E0E0 */
+/* Teks Sekunder: #A0A0A0 */
+
+/* ==================================== */
+/* 1. GLOBAL COLORS & BODY              */
+/* ==================================== */
+
+html[data-theme="dark"],
+body {
+    background-color: #161616 !important; 
+    background-image: none !important; 
+    color: #e0e0e0 !important; 
+}
+
+/* Link/Hyperlink */
+html[data-theme="dark"] a {
+    color: #ffffff; 
+}
+
+html[data-theme="dark"] #upload_card, #table_card {
+    color: #ffffff; 
+    background-color: #1e1e1e !important; 
+    border: none;
+}
+
+html[data-theme="dark"] .upload-area {
+    color: #ffffff; 
+    background-color: #1e1e1e; 
+    border: dashed #b48621;
+    cursor: pointer;
+}
+html[data-theme="dark"] .modal-icon { 
+    color: #b48621;
+}
+
+/* Garis pemisah/Border */
+html[data-theme="dark"] hr,
+html[data-theme="dark"] .border-bottom,
+html[data-theme="dark"] .modal-actions-full,
+html[data-theme="dark"] .filter-actions,
+html[data-theme="dark"] .biodata-header {
+    border-color: #3e3e3e !important;
+}
+
+html[data-theme="dark"] .modal-actions-full .btn-primary{
+    color: #3e3e3e !important;
+}
+
+/* ==================================== */
+/* 2. KONTEN UTAMA & SECTION WRAPPER (Perbaikan Daftar Penerima & Upload File) */
+/* ==================================== */
+
+/* Selektor untuk Konten Utama (Daftar Penerima) dan area Upload File (asumsi ada wrapper) */
+html[data-theme="dark"] .main-content-wrapper,
+html[data-theme="dark"] .data-section,
+html[data-theme="dark"] .upload-section {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+/* ==================================== */
+/* 3. HEADER & FOOTER                   */
+/* ==================================== */
+
+html[data-theme="dark"] #top-header {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+html[data-theme="dark"] .topnav a.active {
+    background-color:#333333 ;
+}
+
+html[data-theme="dark"] #bottom-footer {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+}
+
+/* ==================================== */
+/* 4. SEARCH & FILTER BAR & INPUT       */
+/* ==================================== */
+
+/* Kontainer utama search-bar, filter, dll. */
+html[data-theme="dark"] #search-bar,
+html[data-theme="dark"] .input-group,
+html[data-theme="dark"] .container-data,
+html[data-theme="dark"] .search-group input,
+html[data-theme="dark"] .search-group,
+html[data-theme="dark"] .filter-content {
+    background-color: #1e1e1e; 
+    color: white;
+}
+html[data-theme="dark"] .chip-status,
+html[data-theme="dark"] .chip-bantuan,
+html[data-theme="dark"] .chip-rt,
+html[data-theme="dark"] .chip-rw,
+html[data-theme="dark"] .chip-wilayah {
+    background-color: #1e1e1e; 
+    color: white;
+    border:1.5px solid #b48621;
+}
+
+html[data-theme="dark"] .search-group ::placeholder {
+    color: rgb(204, 202, 202);
+
+}
+
+html[data-theme="dark"] .search-group{ 
+    border:1px solid #b48621;
+}
+
+html[data-theme="dark"] .detail-icon-group i{
+    color: #b48621;
+
+}
+
+html[data-theme="dark"] .filter-body-popup{
+    background-color: #1e1e1e !important; 
+    color: white;
+}
+
+html[data-theme="dark"] .filter-body-popup p{
+    color: white;
+}
+
+html[data-theme="dark"] .filter-item-popup label,
+html[data-theme="dark"] #filter-summary,
+html[data-theme="dark"] #filter-summary.active,
+html[data-theme="dark"] #filter-summary strong{
+    color: white;
+}
+html[data-theme="dark"] #filter-summary i{
+    color: #f7b731;
+}
+
+html[data-theme="dark"] .lang-slider{
+    background-color: #f7b731;
+}
+
+html[data-theme="dark"] .filter-header-popup {
+    background-color: #1e1e1e; 
+    color: white;
+    border-bottom: 2px solid #f7b731 ;
+}
+html[data-theme="dark"] .btn-apply-popup {
+    background-color: #f7b731; 
+    color: #1e1e1e;
+}
+
+html[data-theme="dark"] #search-btn {
+    background-color: #f7b731 !important; 
+    color: #1e1e1e !important;
+}
+
+html[data-theme="dark"] #pagination-controls{
+    border-top: 1px solid #f7b731;
+}
+html[data-theme="dark"] #pagination-controls button{
+    color: #2c2c2c;
+    background-color: #f7b731; 
+}
+
+
+html[data-theme="dark"] #pagination-controls button:hover:not(:disabled) { 
+    background-color: #b48621; 
+    color: #2c2c2c;
+}
+html[data-theme="dark"] #pagination-controls button:disabled { 
+    background-color: #ced4da;
+    color: #2c2c2c;
+    cursor: not-allowed; }
+
+html[data-theme="dark"] .page-number-link{
+    color: #1e1e1e;
+}
+html[data-theme="dark"] .page-number-link.active-page{
+    border: none;
+    box-shadow: 0 2px 5px rgba(255, 255, 255, 0.733);
+    transition: all 0.2s ease-in-out;
+}
+
+
+html[data-theme="dark"] .panduan-footer-nav {
+    background-color: #1e1e1e !important; 
+    border: none;
+    color: white;
+}
+
+html[data-theme="dark"] .panduan-footer-nav .nav-btn{
+    background-color: #f7b731 !important;
+    color: #121212; 
+}
+
+html[data-theme="dark"] .large-excel-icon{    
+    color: #f7b731; 
+}
+html[data-theme="dark"] .btn-upload{
+    background-color: #f7b731 !important;
+    color: #1e1e1e; 
+}
+html[data-theme="dark"] .btn-template {
+    color:#1e1e1e ;
+    }
+html[data-theme="dark"] .download-template {
+    border-top:1px solid #b48621 ;
+    }
+
+html[data-theme="dark"] #slide-indicator {
+    color: white;
+}
+
+html[data-theme="dark"] .panduan-header {
+    border-bottom: 1px solid #616161;
+}
+
+html[data-theme="dark"] .panduan-section-title {
+    color: #f7b731;
+}
+html[data-theme="dark"] .about-section-title {
+    color: #f7b731;
+}
+/* Input teks, select, dan area status file */
+html[data-theme="dark"] .input-group input[type="text"],
+html[data-theme="dark"] .input-group select {
+    background-color: #2c2c2c; 
+    color: #e0e0e0;
+}
+
+/* Perbaikan untuk Input File: Target input dan tombolnya */
+html[data-theme="dark"] input[type="file"] {
+    color: #e0e0e0; /* Warna teks untuk informasi file (jika ada) */
+    background-color: #1e1e1e;
+    border: 1px solid #3e3e3e;
+}
+html[data-theme="dark"] input[type="file"]::file-selector-button {
+    background-color: #2c2c2c;
+    color: #ffffff;
+    border-right: 1px solid #3e3e3e; /* Garis pemisah tombol */
+}
+
+
+html[data-theme="dark"] .input-group input[type="text"]::placeholder {
+    color: #a0a0a0;
+}
+
+/* Tombol-tombol icon */
+html[data-theme="dark"] .btn-icon {
+    background-color: #2c2c2c;
+    color: #e0e0e0; 
+}
+
+html[data-theme="dark"] .btn-icon:hover {
+    background-color: #3e3e3e;
+}
+
+
+/* ==================================== */
+/* 5. DATA TABLE                        */
+/* ==================================== */
+
+/* Kontainer tabel/card */
+html[data-theme="dark"] #data-table-container {
+    background-color: #1e1e1e;
+    border: none ;
+}
+
+/* Header tabel */
+html[data-theme="dark"] #data-list thead th {
+    background-color: #f7b731; 
+    color: #1e1e1e;
+
+}
+
+/* Baris ganjil */
+html[data-theme="dark"] #data-list tbody tr {
+    background-color: #1e1e1e; 
+    color: #e0e0e0; /* Warna default baris tetap abu-abu terang */
+
+}
+
+/* Baris genap */
+html[data-theme="dark"] #data-list tbody tr:nth-child(even) {
+    background-color: #151515; 
+}
+
+/* Hover pada baris */
+html[data-theme="dark"] #data-list tbody tr:hover {
+    background-color: #333333; 
+}
+
+/* --- ATURAN BARU UNTUK NAMA PENERIMA (PUTIH MURNI) --- */
+
+/* Asumsi Nama Penerima berada di sel pertama (td:nth-child(1)) atau sel yang berisi kelas spesifik */
+/* Jika Nama Penerima adalah kolom pertama (paling umum): */
+html[data-theme="dark"] #data-list tbody tr td:nth-child(1) {
+    color: #ffffff !important; /* Diatur menjadi PUTIH MURNI */
+}
+
+/* Jika Nama Penerima adalah kolom kedua (setelah NIK/ID): */
+html[data-theme="dark"] #data-list tbody tr td:nth-child(2) {
+    color: #ffffff !important; /* Diatur menjadi PUTIH MURNI */
+}
+
+/* ==================================== */
+/* 6. MODAL & PRELOADER                 */
+/* ==================================== */
+
+html[data-theme="dark"] .modal {
+    background-color: rgba(0, 0, 0, 0.85); 
+}
+
+html[data-theme="dark"] .modal-content {
+    background-color: #1e1e1e; 
+    color: #e0e0e0;
+    border: none;
+}
+
+html[data-theme="dark"] #preloader-overlay {
+    background-color: #121212;
+}
+
+
+html[data-theme="dark"] .filter-summary-text,
+html[data-theme="dark"] .upload-instruction,
+html[data-theme="dark"] .empty-table-message,
+html[data-theme="dark"] #file-status {
+    color: #e0e0e0;
+}
+
+html[data-theme="dark"] #file-status.status-error {
+    color: #dc3545;
+}
+
+html[data-theme="dark"] .filter-footer-popup{
+    background-color: #1e1e1e;
+    border-top: 2px solid #f7b731;
+}
+
+html[data-theme="dark"] .biodata-body,
+html[data-theme="dark"] .modal-actions-full{
+    background-color: #1e1e1e;
+    color: #ffffff;
+}
+html[data-theme="dark"] .biodata-header{
+    color: #1e1e1e;
+}
+html[data-theme="dark"] .detail-label{
+    color: #ffffff;
+}
+html[data-theme="dark"] #toggle-filter-btn,
+html[data-theme="dark"] #search-btn i,
+html[data-theme="dark"] #topnav-menu-toggle{
+    background-color: #f7b731 ;
+    color: #2c2c2c;
+}
+
+html[data-theme="dark"] .lang-btn {
+    background-color: #f7b731 ;
+    color: #2c2c2c;
+    border: #f7b731;
+}
+
+html[data-theme="dark"] .lang-btn:hover { background-color: #e0a800; }
+
+html[data-theme="dark"] #floating-menu-dropdown i{
+    color: #2c2c2c;
+}
+html[data-theme="dark"] .upload-area.drag-over { 
+     background-color: #2c2c2c !important; 
+    }
+
+html[data-theme="dark"] .lang-option-btn {
+    /* [KUNCI] Ubah warna teks dan border menjadi putih/terang */
+    color: #f0f0f0; /* Teks putih/abu-abu terang */
+    border: 1px solid #777; /* Border abu-abu terang */
+    background-color: transparent;
+}
+
+/* Efek Hover untuk Tombol yang TIDAK AKTIF di Tema Gelap */
+html[data-theme="dark"] .lang-option-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Latar belakang sedikit bercahaya saat hover */
+    border-color: #fff; /* Border menjadi putih bersih saat hover */
+}
+
+html[data-theme="dark"] .lang-option-btn.active {
+    /* [PERUBAHAN UTAMA UNTUK TOMBOL AKTIF] */
+    background-color: var(--primary-color, #f7b731); /* Warna utama aplikasi */
+    color: #2c2c2c; /* Teks putih */
+    font-weight: bold;
+    
+    /* Batas (Border) diatur agar warnanya menyatu dengan background */
+    border: 1px solid var(--primary-color, #f7b731); 
+}
+
+html[data-theme="dark"] .lang-option-btn.active:hover {
+    background-color: var(--primary-color-darker, #b48621);
+    border-color: var(--primary-color-darker, #b48621);
+}
+/* ==================================== */
+/* 7. STATUS COLOR INVERSION (REFERENSI style.css) */
+/* ==================================== */
+
+html[data-theme="dark"] .status-aktif,
+html[data-theme="dark"] .status-pending,
+html[data-theme="dark"] .status-tidak-aktif
+ {
+    background-color: #1e1e1e; 
+    color: white;
+    border:1.5px solid #b48621;
+}

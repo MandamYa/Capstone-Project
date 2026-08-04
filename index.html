@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NASI-BARAS - Sistem Data Bantuan</title> 
+    <link rel="stylesheet" href="css/font.css">    
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/dark-mode.css" disabled id="dark-mode-style">
+</head> 
+<body>
+<div id="preloader-overlay">
+        <div class="preloader-content">
+            <i class="fas fa-landmark preloader-icon"></i> 
+            <h1 class="preloader-title">
+                NASI-<span class="highlight-baras">BARAS</span> 
+            </h1>
+            <div class="preloader-spinner"></div>
+            <p class="preloader-loading-text" data-key="preloader_text">Selamat Datang...</p>
+        </div>
+    </div>
+    
+<div id="top-header">
+        <i class="fas fa-landmark header-icon"></i> <h1 class="header-title">
+            NASI-<span class="highlight-baras">BARAS</span> 
+        </h1> 
+        <p class="header-subtitle" data-key="header_subtitle">
+            <strong>Na</strong>vigasi & 
+            <strong>S</strong>istem <strong>I</strong>nformasi
+            <strong>Ba</strong>ntuan 
+            <strong>Ra</strong>kyat Mi<strong>s</strong>kin
+        </p>
+
+        <span id="live-datetime" class="live-datetime-style">--/--/---- | --:--:--</span>
+
+            <label class="toggle-switch">
+                <input type="checkbox" id="theme-toggle">
+                <span class="slider round">
+                    <span class="knob">
+                        <span class="mode-icon sun-icon"><i class="fas fa-moon"></i></span>
+                        <span class="mode-icon moon-icon"><i class="fas fa-sun"></i></span>
+                    </span>
+                </span>
+            </label>
+</div>
+
+
+<div class="topnav">
+  <a class="active" href="#upload_card" data-key="nav_upload_file">Upload File</a>
+  <a href="#table_card" data-key="nav_recipient_list">Daftar Penerima</a>
+  <a href="#" id="topnav-menu-toggle" class="split" data-key="tooltip_expand_menu" data-type="tooltip" data-tooltip="luaskan menu"><i class="fas fa-bars"></i></a>
+      <div id="floating-menu-dropdown" class="floating-dropdown hidden">
+        <button class="menu-item floating-btn dropdown-item lang-btn" id="open-language-modal" style="font-family: 'Poppins','Roboto', sans-serif;">
+            <i class="fas fa-language"></i> <span data-key="menu_lang_text">Bahasa</span>
+        </button>
+
+        <button class="floating-btn dropdown-item help-btn" style="font-family: 'Poppins','Roboto', sans-serif;">
+            <i class="fas fa-question-circle"></i> <span data-key="menu_guide_text">Panduan</span>
+        </button>
+        
+        <button class="floating-btn dropdown-item about-btn" style="font-family: 'Poppins','Roboto', sans-serif;">
+            <i class="fas fa-info-circle"></i> <span data-key="menu_about_text">Tentang</span>
+        </button>
+    </div>
+    </div>
+
+<div class="container-full">
+    <div class="data-panel">
+        
+        <div class="data-card upload-card" id="upload_card">
+            <div id="upload-card-content" class="card-content-area">
+                <div id="upload-area-drag" class="upload-area"> 
+                    <i class="fas fa-file-excel large-excel-icon"></i>
+                    <p class="upload-instruction" data-key="upload_instruction">Drag & Drop file <strong>(.xlsx)</strong> di sini atau klik tombol di bawah.</p> 
+
+                    <label for="excel-file" class="btn-upload " data-key="tooltip_upload_file" data-type="tooltip" data-tooltip="upload file"><span data-key="select_excel_file">Pilih File Excel</span></label>
+                    <input type="file" id="excel-file" accept=".xlsx" hidden>
+                    
+                    <p id="file-status" class="status-idle" data-key="status_idle">Belum ada file dipilih.</p>
+                </div>
+                
+                <div class="download-template">
+                    <p data-key="no_format_q">Belum punya format data?</p>
+                    <a href="#" id="download-template-btn" class="btn-template" data-key="tooltip_download_template" data-type="tooltip" data-tooltip="download template"> <i class="fas fa-download"></i> <span data-key="download_template_text">Unduh Template (.xlsx)</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="data-card table-card" id="table_card">
+            
+            <div id="table-card-content" class="card-content-area">
+                <p><strong>NOTE: KLIK PADA NAMA PENERIMA BANTUAN UNTUK NAVIGASI</strong></p>
+                
+                <div class="table-controls actions-hidden">                   
+                    <div class="search-group"> 
+                        <input type="text" id="search-input" data-key="search_placeholder" placeholder="Masukkan nama penerima untuk mencari..." style="font-family: 'Poppins', sans-serif"; onkeyup="validateNIKInput(event)">
+                        <button id="search-btn"><i class="fas fa-search search-icon-input"></i></button>
+                    </div>
+
+                    <button id="toggle-filter-btn" class="btn-filter-toggle">
+                        <i class="fas fa-sliders-h"></i> <span class="btn-text" data-key="filter_btn_text">Filter Wilayah</span>
+                        <span id="filter-notification-dot" class="filter-dot"></span> 
+                    </button>
+
+                    <button id="reset-filter-btn" class="btn-reset" style="display: none;">
+                        <i class="fas fa-redo-alt"></i>
+                        <span class="btn-text" data-key="reset_btn_text">Reset</span> 
+                    </button>
+                </div>
+                <div id="filter-summary" class="filter-summary-hidden"></div>
+                <p id="search-feedback" class="search-feedback-text"></p>
+                
+                <div id="data-table-container">
+                    <div id="data-list" class="empty-table-message">
+                            <i class="fas fa-info-circle large-info-icon"></i>
+                            <p data-key="empty_table_title">Mohon unggah file Excel terlebih dahulu untuk melihat data.</p>
+                    </div>
+                </div>
+
+                <div id="pagination-controls">
+                    <button id="prev-page-btn" disabled>
+                        <i class="fas fa-chevron-left"></i> <span class="btn-text" data-key="page_prev_text">Sebelumnya</span>
+                    </button>
+                    <span id="page-info">Halaman 0 dari 0</span> 
+                    <button id="next-page-btn" disabled>
+                        <span class="btn-text" data-key="page_next_text">Selanjutnya</span> <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div id="about-modal" class="modal">
+    <div class="modal-content modal-about">
+        <div class="about-header">
+            <h3 class="modal-title"><i class="fas fa-info-circle"></i> <span data-key="about_modal_title">Tentang NASI-BARAS</span></h3>
+            <span class="close-btn close-about-btn" title="Tutup">&times;</span>
+        </div>
+        
+        <div class="about-body">
+            <h4 class="about-section-title" data-key="about_app_goal_title">Tujuan Aplikasi</h4>
+            <p data-key="about_app_goal_text">
+                **NASI-BARAS** (Navigasi & Sistem Informasi Bantuan Rakyat Miskin) adalah sistem manajemen data yang dirancang untuk mempermudah instansi atau lembaga dalam mengelola, memfilter, dan memvalidasi data penerima bantuan sosial. Sistem ini bertujuan meningkatkan **efisiensi penyaluran** dan **akurasi target** bantuan.
+            </p>
+
+            <h4 class="about-section-title" data-key="about_features_title">Fitur Utama</h4>
+            <ul>
+                <li data-key="about_feature_1">Integrasi data cepat melalui *upload* file **Excel (.xlsx)**.</li>
+                <li data-key="about_feature_2">Pencarian dan pemfilteran data penerima berdasarkan wilayah (RT/RW/Kelurahan).</li>
+                <li data-key="about_feature_3">Fitur navigasi berbasis lokasi (asumsi data koordinat tersedia) untuk verifikasi lapangan.</li>
+            </ul>
+
+            <h4 class="about-section-title" data-key="about_tech_title">Informasi Teknis</h4>
+            <p data-key="about_tech_text">
+                Aplikasi ini dikembangkan menggunakan teknologi *frontend* murni **HTML5, CSS3, dan JavaScript (Vanilla JS)** untuk memastikan kecepatan akses dan kemudahan implementasi tanpa ketergantungan *server* yang kompleks.
+            </p>
+
+            <div class="about-footer-info">
+                <p><strong data-key="about_version_label">Versi:</strong> 1.0.0 (Beta)</p>
+                <p><strong data-key="about_developer_label">Pengembang:</strong> Ya!Pao</p>
+                <p><strong data-key="about_contact_label">Kontak:</strong> +62</p>
+            </div>
+            
+            <div class="disclaimer">
+                <i class="fas fa-exclamation-triangle"></i> <span data-key="about_disclaimer_text">Data yang diolah dalam sistem ini sepenuhnya menjadi tanggung jawab pengguna.</span>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+        <div id="language-modal" class="modal">
+            <div class="modal-content modal-lang">
+                <div class="modal-lang-header">
+                    <h3 data-key="language_modal_title">Pilih Bahasa</h3>
+                    <span class="close-btn close-language-btn" title="Tutup">&times;</span>
+                </div>
+                <div class="modal-body language-options-container">
+                </div>
+            </div>
+         </div>
+
+    <div id="filter-modal" class="modal">
+        <div class="modal-content modal-filter-layout">
+            <div class="filter-header-popup">
+                <h3><i class="fas fa-sliders-h"></i> <span data-key="filter_modal_title_text">Filter Wilayah</span></h3>
+                <span class="close-btn close-filter-btn" title="Tutup">&times;</span>
+            </div>
+            <div class="filter-body-popup">
+                <p data-key="filter_instruction">Silakan pilih wilayah:</p>
+                
+                <div class="filter-item-popup">
+                    <label for="wilayah-filter" data-key="filter_region_label">Wilayah / Kelurahan</label>
+                    <select id="wilayah-filter">
+                        <option value="" data-key="filter_all_option">-- SEMUA --</option>
+                    </select>
+                </div>
+                <div class="filter-item-popup">
+                    <label for="rw-filter" data-key="filter_rw_label">Rukun Warga (RW)</label>
+                    <select id="rw-filter">
+                        <option value="" data-key="filter_all_option">-- SEMUA --</option>
+                    </select>
+                </div>
+                <div class="filter-item-popup">
+                    <label for="rt-filter" data-key="filter_rt_label">Rukun Tetangga (RT)</label>
+                    <select id="rt-filter">
+                        <option value="" data-key="filter_all_option">-- SEMUA --</option>
+                    </select>
+                </div>
+            </div>
+            <div class="filter-footer-popup">
+                <button id="apply-filter-btn" class="btn-apply-popup" data-key="filter_apply_btn" style="width: 100%;">
+                    Tampilkan Data
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="download-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn download-modal-close"  title="Tutup">&times;</span>
+            <i class="fas fa-exclamation-triangle modal-icon" style="color: #f7b731;"></i> <p id="download-modal-text" data-key="download_modal_text">Pastikan Anda menggunakan template ini dengan format data yang benar untuk menghindari error saat unggah.</p>
+            <div class="modal-actions">
+                <button id="download-modal-cancel" class="btn-secondary" data-key="modal_cancel_btn">Batal</button>
+                <button id="download-modal-confirm" class="btn-primary" data-key="modal_confirm_btn">Lanjutkan Unduh</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="navigation-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn"  title="Tutup">&times;</span>
+            <i class="fas fa-map-marked-alt modal-icon"></i>
+            <p data-key="navigation_modal_text">Apakah Anda ingin melihat lokasi rumah penerima bantuan</p>
+            <div class="modal-actions">
+                <button id="modal-cancel-btn" class="btn-secondary" data-key="navigation_cancel">Tidak</button>
+                <button id="modal-confirm-btn" class="btn-primary" data-key="navigation_confirm">Ya, Navigasi</button>
+            </div>
+        </div>
+    </div>
+    <div id="image-zoom-modal" class="modal">
+    <span class="close-btn close-zoom-btn"  title="Tutup">&times;</span>
+    <img class="modal-zoom-content" id="img-to-zoom">
+    <div id="caption"></div>
+</div>
+
+    <div id="panduan-modal" class="modal">
+    <div class="modal-content modal-slide"> <div class="panduan-header">
+            <h3 class="modal-title"><i class="fas fa-book"></i> <span data-key="panduan_modal_title_text">Panduan Penggunaan NASI-BARAS</span></h3>
+            <span class="close-btn close-panduan-btn"  title="Tutup">&times;</span>
+        </div>
+        
+        <div class="panduan-body-slide">
+            
+            <div id="panduan-slide-container">
+                
+                <div class="panduan-slide active-slide" data-step="1">
+                    <h4 class="panduan-section-title" data-key="panduan_section_title_1">1. Muat Data Excel <i class="fas fa-upload"></i></h4>
+                    <div class="panduan-step-content">
+                        <img src="./img/panduan/panduan_1.png" alt="Langkah 1: Unggah Data" class="panduan-img">
+                        <p data-key="panduan_step_1_text"><strong>Langkah 1.1 - Unggah Data:</strong> Gunakan tombol <strong>'Pilih File Excel'</strong> atau area Drag & Drop untuk mengunggah file data (.xlsx). Tombol <strong>'Unduh Template'</strong> tersedia jika Anda membutuhkan format data standar.</p>
+                    </div>
+                </div>
+
+                <div class="panduan-slide" data-step="2">
+                    <h4 class="panduan-section-title" data-key="panduan_section_title_2">2. Mencari & Menampilkan Data <i class="fas fa-search"></i></h4>
+                    <div class="panduan-step-content">
+                        <img src="./img/panduan/panduan_2.png" alt="Langkah 2: Cari Data" class="panduan-img">
+                        <p data-key="panduan_step_2_text"><strong>Langkah 2.1 - Pencarian & Tabel:</strong> Masukkan nama penerima di kolom pencarian dan klik ikon kaca pembesar (<i class="fas fa-search"></i>) untuk mencari. Navigasi halaman menggunakan tombol panah di bawah tabel.</p>
+                    </div>
+                </div>
+
+                <div class="panduan-slide" data-step="3">
+                    <h4 class="panduan-section-title" data-key="panduan_section_title_2_2">2.2 Filter Wilayah </h4>
+                    <div class="panduan-step-content">
+                        <img src="./img/panduan/panduan_2_1.png" alt="Langkah 3: Modal Filter" class="panduan-img">
+                        <p data-key="panduan_step_3_text"><strong>Langkah 2.2 - Buka Filter:</strong> Klik tombol <strong>'Filter Wilayah'</strong>. Pilih kriteria (Wilayah/RW/RT) dari <strong>dropdown</strong> lalu klik <strong>'Tampilkan Data'</strong>.</p>
+                    </div>
+                </div>
+                
+                <div class="panduan-slide" data-step="4">
+                    <h4 class="panduan-section-title" data-key="panduan_section_title_2_3"><i class="fas fa-tag"></i> 2.3 Hasil Filter Aktif</h4>
+                    <div class="panduan-step-content">
+                        <img src="./img/panduan/panduan_2_2.png" alt="Langkah 4: Hasil Filter" class="panduan-img">
+                        <p data-key="panduan_step_4_text"><strong>Langkah 2.3 - Status Filter:</strong> Ringkasan filter yang diterapkan akan muncul di atas kolom pencarian. Klik tombol <strong>'Reset'</strong> (merah) untuk menghapus semua filter.</p>
+                    </div>
+                </div>
+
+                <div class="panduan-slide" data-step="5">
+                    <h4 class="panduan-section-title" data-key="panduan_section_title_3">3. Melihat Detail Biodata <i class="fas fa-user-circle"></i></h4>
+                    <div class="panduan-step-content">
+                        <img src="./img/panduan/panduan_3.png" alt="Langkah 5: Biodata" class="panduan-img">
+                        <p data-key="panduan_step_5_text"><strong>Langkah 3.1 - Buka Biodata:</strong> Klik nama penerima pada tabel untuk menampilkan Modal Biodata. Tinjau Jenis Bantuan dan Alamat Lengkap.</p>
+                    </div>
+                </div>
+                
+                <div class="panduan-slide" data-step="6">
+                    <h4 class="panduan-section-title" data-key="panduan_section_title_3_1"> 3.1 Navigasi ke Lokasi</h4>
+                    <div class="panduan-step-content">
+                        <img src="./img/panduan/panduan_3_1.png" alt="Langkah 6: Navigasi" class="panduan-img">
+                        <p data-key="panduan_step_6_text"><strong>Langkah 3.2 - Navigasi:</strong> Klik tombol <strong>'Navigasi'</strong> di Modal Biodata. Kemudian konfirmasi <strong>'Ya, Navigasi'</strong> untuk membuka aplikasi peta menuju lokasi.</p>
+                    </div>
+                </div>
+                
+            </div>
+            
+        </div>
+        
+        <div class="panduan-footer-nav">
+            <button id="prev-slide-btn" class="nav-btn" disabled><i class="fas fa-chevron-left"></i> <span data-key="panduan_prev_text">Sebelumnya</span></button>
+            <span id="slide-indicator" data-key="panduan_slide_format">1 / 6</span>
+            <button id="next-slide-btn" class="nav-btn"><span data-key="panduan_next_text">Selanjutnya</span> <i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+</div>
+
+    <div id="biodata-modal" class="modal">
+        <div class="modal-content modal-biodata">
+            <div class="biodata-header">
+                <i class="fas fa-user-circle header-icon-biodata"></i>
+                <div class="header-text-group">
+                    <h3 id="biodata-nama-header" data-key="biodata_name_header">Nama Penerima</h3> 
+                    <p id="biodata-nik-header" class="nik-style" data-key="biodata_nik_header">NIK/No. ID</p>
+                </div>
+                <span class="close-btn close-biodata-btn" title="Tutup">&times;</span> 
+            </div>
+            <div class="biodata-body">
+                <div class="biodata-details-container"></div>
+            </div>
+            <div class="modal-actions-full" id="biodata-actions-full"></div>
+        </div>
+    </div></div>
+
+    <footer id="bottom-footer">
+        <div class="container-full footer-content">
+            <p data-key="footer_text">&copy; 2025 NASI-BARAS dikelola oleh Ya!Pao.</p>
+        </div>
+    </footer>
+    
+    <script src="js/lib/xlsx.min.js"></script>
+    <script src="js/data_visual.js"></script>
+    <script src="js/filter.js"></script>
+    <script src="js/modal.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/dictionary.js"></script>
+    <script src="js/translation.js"></script> 
+</body>
+</html>
