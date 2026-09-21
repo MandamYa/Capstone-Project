@@ -1,0 +1,1578 @@
+/* ==================================== */
+/* 1. GLOBAL RESET & BOX MODEL          */
+/* ==================================== */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden; 
+    font-family: 'Poppins','Roboto', sans-serif; 
+    font-size: 16px; 
+    line-height: 1.6;
+    color: #333; 
+    background-color: #f4f7f6; 
+    background-image: url('../img/background.png');
+    background-size: cover; 
+    background-position: center; 
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    /* --- PERBAIKAN: STICKY FOOTER START --- */
+    min-height: 100vh; /* Pastikan body minimal setinggi viewport */
+    display: flex; /* Aktifkan Flexbox */
+    flex-direction: column; /* Susun elemen (Header, Konten, Footer) vertikal */
+    /* --- PERBAIKAN: STICKY FOOTER END --- */
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+/* ==================================== */
+/* 2. TOP HEADER (BLUE BAR)             */
+/* ==================================== */
+.hidden {
+    display: none !important; 
+}
+
+#top-header {
+    background-color: #007bff;
+    width: 100%; 
+    max-width: 1200px; 
+    margin: 0 auto; 
+    padding: 25px 2vw 10px 2vw;
+    color: white;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+.highlight-baras {
+    color: #f7b731; /* Warna Kuning Keemasan/Padi */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+    font-weight: 700;
+}
+.header-content { display: flex; flex-direction: column; align-items: center; }
+.header-icon { 
+    font-size: 3.5em; 
+    margin-bottom: 5px;
+    color: rgb(255, 255, 255);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); 
+}
+.header-title { font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 2.2em; margin: 0; line-height: 1.2; }
+.header-subtitle { font-size: 0.8em; margin: 0 0 10px 0; font-weight: 300; opacity: 0.9; }
+.header-subtitle strong { font-size: 1.0em; font-weight: 900; }
+
+/* ==================================== */
+/* 3. LAYOUT CONTAINER & CARD STYLING   */
+/* ==================================== */
+.container-full { 
+    width: 100%; 
+    max-width: 1200px; 
+    margin: 0 auto; 
+    padding: 0 2vw; 
+    /* --- PERBAIKAN: PUSH FOOTER KE BAWAH --- */
+    flex-grow: 1; 
+    /* ---------------------------------- */
+}
+.data-panel { 
+    width: 100%; 
+    padding: 20px 0; 
+    margin-top: -15px; 
+    position: relative; 
+    z-index: 5; }
+
+.data-card {
+    background-color: #fffffffa; 
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 8px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.data-card h3 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    color: #495057; 
+    font-size: 1.2em;
+    margin: 0 0 15px 0; 
+    padding-bottom: 5px;
+    border-bottom: 2px solid #007bff; 
+    /* PERUBAHAN UNTUK TOGGLE */
+    display: flex; 
+    align-items: center; 
+    width: 100%; 
+    cursor: pointer; 
+    gap: 10px; /* Jarak antara ikon dan teks */
+}
+
+.table-card h3.table-header-with-action {
+    /* PERUBAHAN UNTUK TOGGLE DI TABLE CARD */
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    border-bottom: 2px solid #007bff; 
+    width: 100%; 
+    margin-bottom: 15px; 
+    cursor: pointer; 
+    gap: 10px;
+}
+
+/* BARU: Wrapper untuk teks judul dan ikon di table header */
+.table-card h3.table-header-with-action .header-main-text {
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+}
+
+
+/* BARU: Styling untuk Ikon Toggle Panah */
+.card-toggle-icon {
+    font-size: 1.1em;
+    color: #007bff; 
+    transition: transform 0.2s ease-in-out; 
+    transform: rotate(0deg); 
+    flex-shrink: 0; 
+}
+
+/* BARU: Ikon ketika konten TERSEMBUNYI (Collapsed) */
+.card-toggle-icon.collapsed {
+    transform: rotate(-90deg); 
+}
+
+/* BARU: Konten yang disembunyikan */
+.card-content-area.hidden {
+    display: none !important;
+}
+
+
+/* WADAH BARU UNTUK TOMBOL (TIDAK DIPAKAI LAGI DI H3) */
+.table-actions-group {
+    display: flex;
+    gap: 10px; /* Jarak antara tombol Reset dan Filter */
+    align-items: center;
+    flex-shrink: 0; /* Tambahkan ini agar tidak menyusut paksa */
+}
+
+/* TOMBOL FILTER */
+.btn-filter-toggle {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 8px 15px; border: none; background-color: #007bff; 
+    color: white; cursor: pointer;
+    font-size: 0.9em; font-weight: 600; 
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+    transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    position: relative; 
+}
+.btn-filter-toggle:hover { background-color: #0056b3; transform: translateY(-1px); }
+
+/* NOTIFIKASI DOT FILTER BARU */
+.filter-dot {
+    position: absolute;
+    top: -5px; 
+    right: -5px; 
+    background-color: #f7b731; 
+    color: rgb(36, 36, 36);
+    border-radius: 50%;
+    padding: 2px 6px; 
+    font-size: 0.7em;
+    font-weight: 700;
+    line-height: 1;
+    min-width: 18px; 
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    display: none; 
+    border: 0.5px solid rgb(36, 36, 36); 
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+}
+
+/* ==================================== */
+/* 4. UPLOAD CARD STYLING               */
+/* ==================================== */
+.upload-area { text-align: center; cursor: pointer; padding: 30px 20px; margin-bottom: 15px; transition: background-color 0.3s ease, border-color 0.3s ease; border: 2px dashed #007bff; border-radius: 8px; background-color: #f8faff; }
+.upload-area.drag-over { border: 3px dashed #0056b3; background-color: #b8d3ff88; }
+.large-excel-icon { font-size: 3.5em; color: #007bff; margin-bottom: 10px; }
+.upload-instruction { font-size: 0.95em; color: #555; margin-top: 0; }
+.btn-upload { display: inline-block; padding: 10px 25px;box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4); background-color: #007bff; color: white; border-radius: 5px; cursor: pointer; text-align: center; margin: 10px 0; transition: background-color 0.2s; font-weight: 500; }
+.btn-upload:hover { background-color: #0056b3; }
+.download-template { text-align: center; padding-top: 2px; border-top: 1px solid #f0f0f0; }
+.btn-template { display: inline-flex; align-items: center; gap: 5px; padding: 8px 15px; background-color: #ffc107;box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4); color: #333; border-radius: 5px; text-decoration: none; font-weight: 500; transition: background-color 0.2s; }
+.btn-template:hover { background-color: #e0a800; }
+
+#file-status { margin-top: 5px; font-size: 0.9em; font-weight: 500; color: #555; text-align: center; margin-bottom: 0; }
+#file-status.status-idle { color: #6c757d; }
+#file-status.status-success { color: #0056b3; font-weight: 700; }
+#file-status.status-error { color: #dc3545; font-weight: 700; }
+
+/* ==================================== */
+/* 5. SEARCH & FEEDBACK                 */
+/* ==================================== */
+/* --- BARU: PENGATURAN KONTROL TABEL (Filter, Search, Reset) --- */
+.table-controls {
+    display: flex;       /* Mengatur item agar berbaris horizontal */
+    gap: 10px;           /* Memberikan jarak antar elemen */
+    align-items: center; /* Meratakan elemen secara vertikal di tengah */
+    margin-bottom: 15px; /* Jarak dari elemen di bawahnya */
+    flex-wrap: wrap;     /* Izinkan wrapping pada layar kecil */
+}
+
+/* Penyesuaian untuk Tombol Filter dan Reset agar tingginya sama */
+.btn-filter-toggle,
+#reset-filter-btn.btn-reset {
+    height: 40px; /* Tinggi yang baik untuk sejajar dengan input */
+    flex-shrink: 0;
+}
+/* Tombol Reset dan Filter memiliki ukuran/padding yang sudah cukup baik untuk sejajar */
+
+.search-group { 
+    display: flex; 
+    gap: 5px; 
+    align-items: center; 
+    border: 1px solid #ced4da; 
+    border-radius: 5px; 
+    padding: 5px; 
+    background-color: white; 
+    flex-grow: 1; /* Mengambil sisa ruang horizontal */
+}
+.search-icon-input { color: #ffffff; padding: 0 5px; font-size: 0.9em; }
+#search-input { flex-grow: 1; padding: 8px 10px; border: none; outline: none; }
+#search-btn { padding: 8px 20px; border: none; background-color: #007bff; color: white; border-radius: 4px; cursor: pointer; font-weight: 500; transition: background-color 0.2s; }
+#search-btn:hover { background-color: #0056b3; }
+
+#search-feedback {margin: 10px 0 0 0; padding: 10px 15px; border-radius: 5px; font-size: 0.7em; font-weight: 600; text-align: center; display: none; transition: all 0.3s ease-in-out; }
+.search-feedback-error {background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; animation: fadeInOut 5s; }
+@keyframes fadeInOut { 0% { opacity: 0; transform: translateY(-5px); } 5% { opacity: 1; transform: translateY(0); } 90% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-5px); } }
+
+/* ==================================== */
+/* 6. FILTER SUMMARY & BUTTONS          */
+/* ==================================== */
+#filter-summary { font-size: 0.9em; padding: 10px 0; margin-top: -10px; margin-bottom: 10px; font-weight: 500; color: #495057; display: none; font-family: 'Poppins', sans-serif; }
+#filter-summary i { color: #007bff; margin-right: 5px; }
+#filter-summary strong { font-weight: 700; color: #333; }
+#filter-summary.active { display: block; animation: fadeIn 0.3s ease-in-out; }
+
+#reset-filter-btn.btn-reset {
+    display: inline-flex; align-items: center; gap: 5px; padding: 8px 18px; 
+    border: none; background-color: #ff4242; color: white; border-radius: 25px; 
+    cursor: pointer; font-size: 0.9em; font-weight: 600; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); transition: all 0.2s;
+}
+#reset-filter-btn.btn-reset:hover { background-color: #bd1b1b; transform: translateY(-1px); box-shadow: 0 4px 6px rgba(0, 0, 0, 0.25); }
+
+/* ==================================== */
+/* 7. TABEL DATA & PAGINASI             */
+/* ==================================== */
+#data-table-container { max-height: 55vh; overflow-y: auto; overflow-x: auto; margin-top: 15px; border-radius: 5px; font-size: 1.0em; }
+.empty-table-message { text-align: center; padding: 50px 20px; color: #6c757d; }
+.large-info-icon { font-size: 2em; color: #adb5bd; margin-bottom: 10px; }
+
+#data-list table { width: 100%; border-collapse: collapse; margin-top: 15px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); font-family: 'Poppins', sans-serif; font-size: 0.9em; }
+#data-list th, #data-list td { border: 1px solid #333; padding: 10px 8px; text-align: left; white-space: nowrap; }
+#data-list th { background-color: #f7b731;color: #333; position: sticky; top: 0; z-index: 2; font-weight: 600; text-align: center;}
+#data-list tbody tr:hover { background-color: #f0f8ff; }
+#data-list th:nth-child(2), 
+#data-list td:nth-child(2) { 
+        width: 85%;
+        font-weight: 600; /* Mengatur ketebalan font menjadi semi-bold */
+        color: #333;
+    }
+#data-list td:nth-child(5) { 
+        display: table-cell;
+}
+
+
+/* -------------------------------------- */
+/* PAGINATION STYLING (UPDATE)            */
+/* -------------------------------------- */
+#pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px; 
+    padding: 15px 0 5px 0;
+    margin-top: 5px; 
+    border-top: 1px solid #333;
+    flex-wrap: wrap; 
+}
+#pagination-controls button {
+    font-family:'Poppins',sans-serif; 
+    background-color: #007bff; 
+    color: white; 
+    border: none; 
+    padding: 8px 15px; 
+    margin: 0 1px; 
+    border-radius: 4px; 
+    cursor: pointer; 
+    font-weight: 500; 
+    transition: background-color 0.2s; 
+    display: flex; 
+    align-items: center;
+    gap: 5px;
+}
+#pagination-controls button:hover:not(:disabled) { background-color: #0056b3; }
+#pagination-controls button:disabled { background-color: #ced4da; cursor: not-allowed; }
+
+/* Style untuk Nomor Halaman Mobile */
+.page-number-mobile-group {
+    display: none; 
+    align-items: center;
+    justify-content: center;
+    gap: 5px; 
+    font-family: 'Poppins', sans-serif;
+}
+
+.page-number-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 35px; 
+    height: 35px;
+    border-radius: 50%;
+    text-decoration: none;
+    color: #333;
+    background-color: #f0f0f0;
+    transition: background-color 0.2s, transform 0.2s;
+    font-weight: 500;
+    font-size: 0.9em;
+    cursor: pointer;
+    border: 1px solid #ddd;
+}
+
+.page-number-link:hover {
+    background-color: #e0e0e0;
+    transform: scale(1.05);
+}
+
+/* Style untuk halaman aktif dengan lingkaran berwarna (warna Padi) */
+.page-number-link.active-page {
+    background-color: #f7b731; 
+    color: #333;
+    font-weight: 700;
+    border-color: #e0a800;
+    border:2px dashed #007bff ;
+}
+/* -------------------------------------- */
+
+
+/* ==================================== */
+/* 8. MODAL SYSTEM (GLOBAL)             */
+/* ==================================== */
+.modal { display: none; position: fixed; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.6); backdrop-filter: blur(3px); }
+.modal-content { background-color: #fefefe; margin: 10% auto; padding: 30px; border: 1px solid #888; width: 85%; max-width: 450px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3); text-align: center; position: relative; animation: fadeInModal 0.3s ease-out; font-family: 'Poppins', sans-serif; }
+@keyframes fadeInModal { from { opacity: 0; transform: translateY(-50px); } to { opacity: 1; transform: translateY(0); } }
+.close-btn { color: #aaa; float: right; font-size: 28px; font-weight: bold; position: absolute; top: 10px; right: 15px; cursor: pointer; transition: color 0.2s; }
+.close-btn:hover { color: #333; }
+
+/* ==================================== */
+/* 9. STYLE MODAL FILTER POPUP (BARU)   */
+/* ==================================== */
+.modal-content.modal-filter-layout {font-family:'Poppins',sans-serif; max-width: 400px; padding: 0; border-radius: 10px; overflow: hidden; text-align: left; }
+.filter-header-popup {font-family:'Poppins',sans-serif; background-color: #007bff; color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
+.filter-header-popup h3 { margin: 0; font-size: 1.1em; }
+.close-filter-btn { color: white; font-size: 1.8em; cursor: pointer; line-height: 0.5; }
+.filter-body-popup { padding: 20px; background-color: #fff; }
+.filter-item-popup label {display: block; font-weight: 600; font-size: 0.9em; margin-bottom: 5px; color: #444; }
+.filter-item-popup select {font-family: 'Poppins', sans-serif; width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 1em; background-color: #f9f9f9; }
+.filter-footer-popup { padding: 15px 20px; background-color: #f8f9fa; border-top: 1px solid #e0e0e0; display: flex; gap: 10px; justify-content: flex-end; }
+.btn-apply-popup {font-family:'Poppins',sans-serif; background-color: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: 600; flex-grow: 1; }
+.btn-reset-popup { background-color: #dc3545; color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-weight: 600; }
+
+/* ==================================== */
+/* 10. MODAL BIODATA & NAVIGASI         */
+/* ==================================== */
+.modal-icon { font-size: 3em; color: #007bff; margin-bottom: 15px; }
+.modal-actions { display: flex; justify-content: space-around; gap: 10px; }
+.modal-actions button { padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; flex-grow: 1; }
+.btn-primary { font-family: 'Poppins','Roboto', sans-serif;background: linear-gradient(135deg, #ac7f20 0%, #f7b731 100%); }
+.btn-secondary { font-family: 'Poppins','Roboto', sans-serif;background-color: #f8f9fa; color: #343a40; }
+
+/* Biodata Styles */
+.modal-content.modal-biodata { padding: 0; max-width: 400px; border: 2.5px solid #353535; }
+.biodata-header { border-radius:10px 10px 0 10px;background: linear-gradient(135deg, #ac7f20 0%, #f7b731 100%); color: white; padding: 15px 20px; display: flex; align-items: center; gap: 15px;text-align: left; }
+.header-icon-biodata { font-size: 2.2em; color: white; }
+.header-text-group h3 { margin: 0; font-size: 1.1em; }
+.biodata-header .nik-style { margin: 0; font-size: 0.8em; color: white; opacity: 0.9; }
+.modal-content.modal-biodata .close-btn { position: static; color: white; font-size: 1.8em; margin-left: auto; }
+.biodata-body { padding: 20px; background-color: white; text-align: left; }
+.detail-icon-group { display: flex; align-items: center; gap: 10px; margin-bottom: 5px; }
+.detail-icon-group i { font-size: 1.2em; color: #007bff; }
+.detail-label { font-size: 0.95em; font-weight: 600; color: #495057; }
+.detail-value-group { padding-left: 30px; display: flex; flex-wrap: wrap; gap: 8px; }
+.detail-separator { border-top: 1px solid #e0e0e0; margin: 15px 0; }
+.chip-status, .data-chip { padding: 4px 10px; border-radius: 20px !important; font-size: 0.8em; font-weight: 700; }
+.chip-wilayah, .chip-status, .chip-bantuan, .chip-rt, .chip-rw { background-color: #007bff; color: white; }
+
+/* --- TOMBOL NAVIGASI DI MODAL BIODATA (BAGUS & KEREN) --- */
+.modal-actions-full { padding: 0 25px 25px 25px; background-color: white; border-radius: 0 0 12px 12px; display: flex; flex-direction: column; gap: 10px; }
+
+.modal-actions-full .btn-primary {
+    width: 100%;
+    background: linear-gradient(135deg, #ac7f20 0%, #f7b731 100%); 
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 25px; 
+    font-family: 'Poppins', sans-serif; font-size: 1.05em; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(167, 137, 40, 0.3); 
+    transition: all 0.3s ease;
+}
+.modal-actions-full .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255, 255, 255, 0.4); }
+.modal-actions-full .btn-primary:active { transform: translateY(1px); }
+
+.navigation-warning-full { background-color: #f8d7da; color: #dc3545; padding: 10px; border-radius: 8px; text-align: center; font-size: 0.95em; }
+
+/* ==================================== */
+/* 11. FOOTER & MOBILE RESPONSIVE       */
+/* ==================================== */
+@media (max-width: 600px) {
+    .container-full { padding: 0 6px; }
+    .data-card { padding: 15px; }
+    
+    /* --- PENGATURAN KONTROL TABEL MOBILE: Tetap horizontal dan rapi --- */
+    .table-controls {
+        flex-wrap: nowrap; 
+        gap: 8px; 
+        justify-content: space-between; 
+        width: 100%;
+    }
+    
+    .table-actions-group {
+        display: flex;
+        flex-direction: row; 
+        gap: 5px; 
+        flex-shrink: 0; 
+        flex-wrap: nowrap;
+    }
+
+    /* Tombol Filter dan Reset (Hanya Tampilkan Icon) */
+    .btn-filter-toggle {
+        width: 40px; 
+        padding: 10px 0; 
+        justify-content: center;
+    }
+    #reset-filter-btn.btn-reset {
+        width: 40px; 
+        padding: 10px 0; 
+        justify-content: center;
+    }
+    
+    /* Sembunyikan Teks pada tombol Filter dan Reset di Mobile */
+    .btn-filter-toggle .btn-text, 
+    #reset-filter-btn .btn-text { 
+        display: none; 
+    } 
+    
+    .btn-filter-toggle i,
+    #reset-filter-btn.btn-reset i { 
+        margin: 0; 
+        font-size: 1.2em; 
+    }
+    
+    /* --- END PENGATURAN KONTROL TABEL MOBILE --- */
+
+    .filter-dot { top: -3px; right: -3px; border-width: 1px; } 
+    .upload-area .large-excel-icon, .upload-area .upload-instruction { display: none !important; }
+    .upload-area { padding: 0; border: none;border: 2px dashed #007bff; }
+    
+    /* [MODIFIKASI SEARCH BAR INLINE] */
+    .search-group { 
+        flex-wrap: nowrap; 
+        gap: 8px; 
+        /* Default: Ambil 72% ruang saat tombol aksi terlihat */
+        flex-grow: 0; 
+        width: 72%; 
+        flex-shrink: 1; 
+    }
+    #search-input { 
+        width: 100%; 
+        flex-grow: 1; 
+        margin-top: 0; 
+    }
+    #search-btn { 
+        width: auto; 
+        flex-shrink: 0; 
+        margin-top: 0; 
+        padding: 10px 15px; 
+    }
+    /* -------------------------------------- */
+    
+    /* ====================================== */
+    /* BARU: LOGIKA KETIKA TOMBOL TERSEMBUNYI */
+    /* ====================================== */
+    
+    /* 1. Sembunyikan Tombol Aksi */
+    .table-controls.actions-hidden .table-actions-group {
+        display: none !important;
+    }
+    
+    /* 2. Buat Search Group mengambil lebar penuh */
+    .table-controls.actions-hidden .search-group {
+        flex-grow: 1 !important; /* Ambil semua ruang yang tersedia */
+        width: 100% !important;  /* Timpa nilai 72% */
+    }
+    /* ====================================== */
+    
+    /* [MODIFIKASI PAGINASI MOBILE] */
+    #pagination-controls { 
+        display: flex; /* Jika belum ada */
+        flex-wrap: wrap; 
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
+        padding-top: 10px;
+    }
+    .data-count-mobile {
+        display: block !important; /* Overwrite jika ada styling lain yang menyembunyikan */
+        width: 100%; 
+        text-align: center;
+        order: -1; 
+        margin-bottom: 10px; 
+        font-size: 0.85em;
+    }
+
+    /* Sembunyikan teks 'Sebelumnya' dan 'Berikutnya' di mobile */
+    #prev-page-btn .btn-text, 
+    #next-page-btn .btn-text {
+        display: none; 
+    }
+    
+    /* Tombol Prev/Next hanya berupa ikon */
+    #prev-page-btn, #next-page-btn { 
+        width: 45px; 
+        padding: 10px; 
+        border-radius: 8px; 
+        justify-content: center;
+        flex-shrink: 0;
+        margin: 0;
+    }
+
+    #prev-page-btn i, #next-page-btn i {
+        margin: 0; 
+        font-size: 1.2em;
+    }
+
+    /* menampilkan data count info di mobile */
+    #pagination-controls span#data-count-info { 
+        display: block !important; 
+    }
+    
+    /* Atur kontainer #page-info */
+    #page-info {
+        flex-grow: 1; 
+        display: flex; 
+        justify-content: center;
+        font-size: 0.9em;
+    }
+    
+    /* Sembunyikan teks info standar (desktop) di mobile */
+    .page-info-text { 
+        display: none !important; 
+    }
+    
+    /* Tampilkan grup nomor halaman di mobile */
+    .page-number-mobile-group {
+        display: flex !important; 
+        flex-grow: 1;
+        justify-content: center;
+    }
+    /* -------------------------------------- */
+
+
+    .modal-content.modal-filter-layout { width: 90%; margin-top: 20vh; }
+
+    /* --- ATURAN UNTUK TABEL MOBILE (Hanya No dan Nama) --- */
+    #data-list table {
+        table-layout: fixed; 
+    }
+    
+    #data-list th, #data-list td {
+        white-space: normal; 
+    }
+
+    #data-list th:nth-child(1), 
+    #data-list td:nth-child(1) { 
+        width: 15%; 
+    }
+    
+    #data-list th:nth-child(2), 
+    #data-list td:nth-child(2) { 
+        width: 55%;
+        font-weight: 600; 
+        color: #333;
+    }
+    
+    #data-list th:nth-child(3), 
+    #data-list td:nth-child(3) { 
+        display: table-cell; 
+        width: 30%; /* Kolom STATUS */
+        text-align: center;
+    }
+    /* Kolom ke-4 dan seterusnya disembunyikan */
+    #data-list th:nth-child(n+4), 
+    #data-list td:nth-child(n+4) { 
+        display: none; 
+    }
+    /* ----------------------------------------------------- */
+}
+
+/* ==================================== */
+/* 12. PRELOADER STYLING                  */
+/* ==================================== */
+
+/* Overlay penuh layar */
+#preloader-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #007bff; /* Warna biru sesuai header Anda */
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* Pastikan di atas semua elemen lain */
+    opacity: 1;
+    transition: opacity 0.5s ease; /* Transisi untuk menghilang */
+}
+
+/* Container konten preloader */
+.preloader-content {
+    text-align: center;
+    padding-bottom: 50px; /* Sedikit naik dari tengah */
+}
+
+/* Ikon Landmark (sesuai ikon header) */
+.preloader-icon {
+    font-size: 3em;
+    margin-bottom: 10px;
+    color:#ffffff; /* Warna highlight */
+}
+
+/* Judul Aplikasi */
+.preloader-title {
+    font-size: 2.5em;
+    margin: 0;
+    font-weight: 700;
+}
+
+/* Highlight BARAS */
+.preloader-title .highlight-baras {
+    color: #f7b731; /* Warna highlight BARAS */
+}
+
+/* Teks loading */
+.preloader-loading-text {
+    font-size: 1.1em;
+    margin-top: 20px;
+    font-weight: 300;
+}
+
+
+/* Spinner Animasi */
+.preloader-spinner {
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-top: 4px solid white; 
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto 0;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Class untuk menyembunyikan preloader (ditambahkan via JS) */
+.preloader-hidden {
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+/* ==================================== */
+/* 13. FLOATING MENU STYLING (BARU)     */
+/* ==================================== */
+
+/* Dropdown Container */
+#floating-menu-dropdown {
+    display: flex;
+    flex-direction: column; 
+    align-items: flex-end; /* Memastikan item (tombol) rata kanan */
+    position: absolute;
+    top: 100%; /* BERADA TEPAT DI BAWAH TOPNAV */
+    right: 0; /* Rata kanan dengan tombol toggle */
+    
+    background-color: #333; /* Warna latar belakang sama dengan topnav */
+    padding: 10px; /* Padding di sekitar tombol dropdown */
+    border-radius: 0 0 5px 5px; /* Sudut membulat di bagian bawah */
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+
+    /* Animasi (dipertahankan) */
+    opacity: 1; 
+    transition: opacity 0.3s, transform 0.3s;
+    transform: translateY(0);
+}
+
+.floating-dropdown.hidden {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px); /* Efek meluncur ke atas sedikit saat hilang */
+    pointer-events: none;
+}
+
+/* Dropdown Items (Tombol Panduan & Tentang) */
+.floating-btn.dropdown-item {
+    width: auto; 
+    min-width: 180px;
+    height: auto; 
+    border-radius: 5px; /* Bentuk kotak agar lebih formal di topnav */
+    padding: 8px 12px; 
+    justify-content: flex-start;
+    gap: 10px;
+    font-size: 0.9em;
+    font-weight: 500;
+    margin-top: 5px; 
+    box-shadow: none; 
+}
+/* Tombol di dropdown harus tetap putih agar terlihat di latar belakang #333 */
+.floating-btn.dropdown-item i {
+    color: white; 
+}
+
+/* Warna untuk jenis tombol (Disarankan agar tombolnya terlihat di latar belakang gelap) */
+.dropdown-item.lang-btn { 
+    background-color: #007bff;/* Biru agar kontras */
+    border: 1px solid #007bff; 
+}
+.dropdown-item.lang-btn:hover { background-color: #016ee2; }
+
+.dropdown-item.help-btn { 
+    background-color: #f7b731; /* Biru agar kontras */
+    border: 1px solid #f7b731; 
+}
+.dropdown-item.help-btn:hover { background-color: #e0a800; }
+
+.dropdown-item.about-btn { 
+    background-color: #6c757d; /* Abu-abu untuk 'Tentang' */
+    border: 1px solid #6c757d; 
+}
+.dropdown-item.about-btn:hover { background-color: #5a6268; }
+
+
+/* Mobile Adjustment */
+@media (max-width: 600px) {
+    /* Aturan floating menu lama dihapus */
+    
+    /* Dropdown tetap sama di mobile, karena positioning relatif terhadap topnav */
+    .floating-btn.dropdown-item {
+        min-width: 150px;
+        padding: 8px 12px;
+        font-size: 0.85em;
+    }
+}
+/* ==================================== */
+/* 14. MODAL PANDUAN STYLING (SLIDE FORMAT) */
+/* ==================================== */
+
+/* Mengganti modal-large dengan modal-slide yang lebih spesifik */
+.modal-content.modal-slide {
+    max-width: 550px; /* Ukuran yang ideal untuk tampilan vertikal mobile screenshot */
+    width: 90%;
+   /* PERBAIKAN: Gunakan Flexbox untuk layout vertikal */
+    display: flex; 
+    flex-direction: column; 
+    
+    height: auto; 
+    max-height: 95vh; /* Batasan tinggi keseluruhan modal */
+}
+
+.panduan-header {
+    border-bottom: 2px solid #eee;
+    padding: 10px 20px; /* Tambahkan padding agar judul tidak terlalu mepet */
+    margin-bottom: 0;
+}
+
+.panduan-body-slide {
+    padding: 10px;
+    height: 100%;
+    flex-grow: 1;
+    /* Tinggi body harus ditentukan agar overflow berfungsi jika diperlukan */
+    max-height: calc(95vh - 120px); /* Total Vh - Header & Footer Nav */
+    overflow: hidden; /* Sembunyikan semua slide kecuali yang aktif */
+    position: relative;
+    overflow-y: auto;
+    min-height: 200px;
+}
+
+#panduan-slide-container {
+    width: 100%;
+    position: relative;
+    /* Kita akan mengontrol tampilan dengan JS, bukan dengan float/flex */
+}
+
+.panduan-slide {
+    display: none; /* Default: Semua slide tersembunyi */
+    /* Pastikan konten slide bisa discroll jika tingginya melebihi body */
+    height: 100%;
+    overflow-y: auto; 
+    height: 100%;
+    padding-right: 15px; /* Ruang untuk scrollbar */
+    animation: fadeInSlide 0.3s ease-in-out;
+}
+
+.panduan-slide.active-slide {
+    display: block; /* Hanya slide aktif yang ditampilkan */
+}
+
+@keyframes fadeInSlide {
+    from { opacity: 0; transform: translateX(10px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.panduan-section-title {
+    color: #007bff;
+    margin-top: 0px;
+    margin-bottom: 5px;
+    font-size: 1.2em;
+    font-weight: 700;
+}
+
+.panduan-step-content {
+    /* Container untuk Gambar dan Deskripsi */
+    text-align: center;
+}
+
+.panduan-img {
+    width: auto; /* Gambar akan menyesuaikan lebarnya secara otomatis */
+    max-width: 80%; /* Batasi lebar maksimum gambar menjadi 80% dari container */
+    max-height: 250px; /* Batasi tinggi maksimum gambar agar tidak terlalu panjang */
+    height: auto; /* Sesuaikan tinggi secara proporsional */
+    border-radius: 5px;
+    margin: 15px auto; /* Memberi jarak atas dan bawah, dan menengahkan gambar */
+    display: block; /* Penting untuk menengahkan dengan margin auto */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    object-fit: contain; /* Memastikan seluruh gambar terlihat tanpa terpotong */
+}
+
+.panduan-step-content p {
+    font-size: 0.9em;
+    text-align: left;
+    margin-top: 15px;
+    padding: 0 5px;
+}
+
+/* Footer Navigasi (Tombol Prev/Next) */
+.panduan-footer-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-top: 1px solid #eee;
+    background-color: #f7f7f7;
+    border-radius: 0 0 10px 10px;
+}
+
+.panduan-footer-nav .nav-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.2s;
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.panduan-footer-nav .nav-btn:hover:not(:disabled) {
+    background-color: #0056b3;
+}
+
+.panduan-footer-nav .nav-btn:disabled {
+    background-color: #ced4da;
+    cursor: not-allowed;
+}
+
+#slide-indicator {
+    font-weight: 600;
+    color: #333;
+    font-size: 1em;
+}
+
+@media (max-width: 600px) {
+    .modal-content.modal-slide {
+        width: 95%;
+        margin: 5% auto;
+    }
+    .panduan-footer-nav {
+        padding: 10px 15px;
+    }
+    .panduan-footer-nav .nav-btn {
+        padding: 8px 10px;
+        font-size: 0.85em;
+    }
+    .panduan-img {
+        max-width: 90%; /* Sedikit lebih lebar di mobile */
+        max-height: 200px; /* Lebih kecil di mobile */
+    }
+    .panduan-step-content p {
+        font-size: 0.85em; /* Kecilkan font teks penjelasan */
+    }
+}
+
+/* ==================================== */
+/* 15. MODAL ZOOM (LIGHTBOX) STYLING    */
+/* ==================================== */
+
+#image-zoom-modal {
+    display: none; /* Tersembunyi secara default */
+    position: fixed; 
+    z-index: 2000; /* PENTING: Harus di atas semua modal lain (Panduan, Biodata) */
+    padding-top: 60px; /* Jarak dari atas (di bawah tombol tutup) */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Memungkinkan scrolling jika gambar sangat besar */
+    background-color: rgba(0,0,0,0.9); /* Latar belakang semi-transparan hitam */
+}
+
+/* Gambar di dalam Modal Zoom */
+.modal-zoom-content {
+    margin: auto;
+    display: block;
+    width: 90%; 
+    max-width: 1000px; /* Batasan lebar maksimal gambar */
+    max-height: 90%; /* Batasan tinggi maksimal agar tidak menutupi tombol tutup */
+    object-fit: contain; /* Memastikan gambar tidak terpotong */
+    animation-name: zoom;
+    animation-duration: 0.6s;
+    border-radius: 5px;
+}
+
+/* Tombol Tutup pada Modal Zoom (Di sudut kanan atas) */
+.close-zoom-btn {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+    z-index: 2001; /* Di atas gambar */
+    opacity: 0.8;
+}
+
+.close-zoom-btn:hover,
+.close-zoom-btn:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Animasi Zoom In (opsional) */
+@keyframes zoom {
+    from {transform: scale(0.1)} 
+    to {transform: scale(1)}
+}
+/* ==================================== */
+/* 16. MODAL TENTANG (ABOUT) STYLING    */
+/* ==================================== */
+
+.modal-content.modal-about {
+    max-width: 500px; /* Ukuran yang ideal untuk teks informasi */
+    width: 90%;
+    /* Gunakan Flexbox agar konten terstruktur */
+    display: flex;
+    flex-direction: column;
+}
+
+.about-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    padding: 15px 20px;
+}
+
+.about-body {
+    padding: 20px;
+    overflow-y: auto; /* Memungkinkan scrolling jika konten panjang */
+}
+
+.about-section-title {
+    color: #007bff;
+    margin-top: 15px;
+    margin-bottom: 8px;
+    font-size: 1.1em;
+    font-weight: 600;
+    border-bottom: 1px dashed #eee;
+    padding-bottom: 5px;
+}
+
+.about-body ul {
+    list-style-type: disc;
+    margin-left: 20px;
+    padding-left: 0;
+    font-size: 0.95em;
+}
+
+.about-body p {
+    font-size: 0.95em;
+    line-height: 1.5;
+}
+
+.about-footer-info p {
+    margin: 5px 0;
+    font-size: 0.9em;
+}
+
+.disclaimer {
+    margin-top: 25px;
+    padding: 10px;
+    background-color: #fce4e4; /* Latar belakang merah muda muda */
+    border: 1px solid #f99;
+    color: #d9534f;
+    border-radius: 4px;
+    font-size: 0.85em;
+    text-align: center;
+}
+/* ==================================== */
+/* TOP NAVIGASI       */
+/* ==================================== */
+.topnav {
+  overflow: visible;
+  position: relative;
+  background-color: #333;
+  width: 100%; 
+  max-width: 1200px; 
+  margin: 0 auto; 
+}
+
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a.split {
+  float: right;
+  background-color: #f7b731;
+  color: white;
+}
+.topnav a.active {
+    color: white; 
+    border-bottom: 3px solid #f7b731;
+    background-color:#333333 ;
+}
+#upload_card, #table_card {
+    display: none;
+}
+#bottom-footer {
+    color: #f2f2f2;
+    padding: 5px 0;
+    text-align: center;
+    font-size: 0.7em;
+    margin-top: auto;
+    background-color:#333;
+    overflow: hidden;
+     width: 100%; 
+    max-width: 1200px; 
+    margin: 0 auto; 
+}
+
+/* ==================================== */
+/* 17. STYLE STATUS KOLOM DATA        */
+/* ==================================== */
+.status-aktif,
+.status-tidak-aktif,
+.status-pending {
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 4px;
+    display: inline-block; /* Agar padding dan border-radius bekerja */
+    line-height: 1.2;
+    text-align: center;
+    min-width: 60px;
+    white-space: nowrap; /* Mencegah status terpotong */
+    font-size: 0.85em;
+}
+
+/* Status AKTIF (Hijau) */
+.status-aktif {
+    color: #155724; /* Teks hijau gelap */
+    background-color: #d4edda; /* Latar belakang hijau muda */
+}
+
+/* Status TIDAK AKTIF (Merah) */
+.status-tidak-aktif {
+    color: #721c24; /* Teks merah gelap */
+    background-color: #f8d7da; /* Latar belakang merah muda */
+}
+
+/* Status PENDING (Kuning) */
+.status-pending {
+    color: #856404; /* Teks kuning gelap/cokelat */
+    background-color: #fff3cd; /* Latar belakang kuning muda */
+}
+
+/* Pastikan warna tetap muncul di mode mobile (kolom ke-3) */
+@media (max-width: 600px) {
+    #data-list td:nth-child(3) .status-aktif,
+    #data-list td:nth-child(3) .status-tidak-aktif,
+    #data-list td:nth-child(3) .status-pending {
+        /* Opsional: Sesuaikan ukuran font atau padding untuk mobile jika perlu */
+        font-size: 0.8em; 
+        padding: 3px 6px;
+    }
+}
+
+/* ==================================== */
+/* 18. ANIMASI TOGGLE THEME      */
+/* ==================================== */
+.toggle-switch {
+    position: absolute !important;
+    display: inline-block;
+    width: 70px; 
+    height: 35px;
+    top: 10px; 
+    right: 1vw;
+    margin: 0; 
+    /* Memastikan selalu di atas (opsional, tetapi direkomendasikan) */
+    z-index: 100;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* Rel Slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #333; /* Rel saat Gelap */
+    border-radius: 35px;
+    transition: background-color 0.4s;
+    width: 50px; 
+    height: 20px;
+}
+
+/* Warna Rel saat Terang */
+input:checked + .slider {
+    background-color: #f7b731;
+}
+
+/* --- Styling Kenop 3D (Posisi & Shadow) --- */
+
+.knob {
+    position: absolute;
+    width: 20px; 
+    height: 20px; 
+    top: 2px; /* (25px - 21px) / 2 = 2px */
+    left: 2px;
+    top: 0;
+    left: 0; 
+    background-color: #555; /* Warna kenop netral */
+    border-radius: 50%;
+    
+    /* Animasi Geser Kenop */
+    transition: transform 0.4s, background-color 0.4s;
+    
+    /* Efek 3D */
+    box-shadow: 
+        0 4px 6px rgba(0, 0, 0, 0.4), 
+        inset 0 2px 4px rgba(0, 0, 0, 0.3), 
+        inset 0 -2px 4px rgba(255, 255, 255, 0.2) ; 
+    
+    /* Setup untuk ikon */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Penting untuk menyembunyikan ikon yang keluar saat transisi */
+}
+.knob i {
+    font-size: 16px; /* Ukuran ikon PC/Default yang baru */
+    line-height: 21px; /* Sesuaikan dengan tinggi knob */
+}
+
+/* Gerakkan Kenop ke Kanan saat Terang */
+input:checked + .slider .knob {
+    transform: translateX(25px);
+    background-color:#34495e ;
+}
+
+/* Warna Kenop saat Gelap */
+input:not(:checked) + .slider .knob {
+    background-color:#f7b731 ;
+}
+
+/* --- Styling Ikon (Bulan/Matahari) --- */
+
+.mode-icon {
+    position: absolute;
+    font-size: 1.5em;
+    transition: transform 0.4s, opacity 0.4s;
+    line-height: 1; 
+}
+
+/* 1. POSISI DEFAULT (Mode GELAP: Input TIDAK checked, Kenop di Kiri) */
+
+/* Ikon BULAN (Harus terlihat) */
+.moon-icon {
+    opacity: 1; /* Terlihat */
+    transform: translateX(0); /* Di tengah kenop */ /* Warna ikon Bulan/Gelap */
+}
+
+/* Ikon MATAHARI (Harus tersembunyi di posisi KANAN) */
+.sun-icon {
+    opacity: 0; /* Tersembunyi */
+    transform: translateX(22px); /* Tersembunyi ke KANAN */
+}
+
+/* 2. KONDISI CHECKED (Mode TERANG: Input checked, Kenop Geser Kanan) */
+
+input:checked + .slider .knob .moon-icon {
+    /* Bulan bergerak keluar ke KIRI dan memudar */
+    opacity: 0;
+    transform: translateX(-22px); 
+}
+
+input:checked + .slider .knob .sun-icon {
+    /* Matahari bergerak masuk ke tengah dan terlihat */
+    opacity: 1;
+    transform: translateX(0); 
+}
+
+/* 3. KONDISI NOT CHECKED (Mode GELAP: Kondisi default) */
+/* Blok ini hanya memastikan transisi kembali mulus jika diperlukan */
+
+input:not(:checked) + .slider .knob .sun-icon {
+    /* Matahari bergerak keluar ke KANAN dan memudar */
+    opacity: 0;
+    transform: translateX(22px);
+}
+
+input:not(:checked) + .slider .knob .moon-icon {
+    /* Bulan bergerak masuk ke tengah dan terlihat */
+    opacity: 1;
+    transform: translateX(0);
+}
+
+@media (max-width: 600px) {
+    /* 2. Perkecil dimensi dasar slider */
+    .toggle-switch .slider {
+        width: 50px; /* Lebar switch lebih kecil */
+        height: 25px; /* Tinggi switch lebih kecil */
+        left: 15px;
+    }
+
+    /* 3. Perkecil tombol kenop (knob) */
+    .toggle-switch .knob {
+        width: 23px; /* Diameter kenop lebih kecil */
+        height: 23px; /* Diameter kenop lebih kecil */
+    }
+
+    /* 4. Sesuaikan pergerakan kenop saat checked (posisi kanan) */
+    input:checked + .slider .knob {
+        transform: translateX(25px); /* Geser ke kanan (50px - 25px = 25px) */
+    }
+
+    /* 5. Perkecil ikon di dalam kenop */
+    .knob i {
+        font-size: 14px; /* Ukuran ikon (bulan/matahari) lebih kecil */
+        line-height: 21px; /* Sesuaikan dengan tinggi knob */
+    }
+
+    /* 6. Sesuaikan posisi ikon yang tersembunyi (agar transisi tetap mulus) */
+    
+    /* Ikon MATAHARI (Awalnya tersembunyi di kanan) */
+    .sun-icon {
+        opacity: 0;
+        transform: translateX(22px); 
+    }
+     .moon-icon {
+        opacity: 0;
+        transform: translateX(22px); 
+    }
+    
+    /* KONDISI CHECKED (Mode Terang) */
+    input:checked + .slider .knob .moon-icon {
+        /* Bulan keluar ke KIRI */
+        opacity: 0;
+        transform: translateX(-22px); 
+    }
+    
+    /* KONDISI NOT CHECKED (Mode Gelap) */
+    input:not(:checked) + .slider .knob .sun-icon {
+        /* Matahari keluar ke KANAN */
+        opacity: 0;
+        transform: translateX(22px);
+    }
+}
+
+/* ==================================== */
+/* TOGGLE BAHASA      */
+/* ==================================== */
+
+.modal-lang{
+    max-width: 400px;
+    width: 90%;
+    margin-top: 100px;
+}
+
+/* Container untuk menata tombol bahasa secara vertikal */
+.language-options-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px; /* Jarak antar tombol */
+    padding: 15px;
+}
+
+/* --- 2. TOMBOL PILIHAN BAHASA (.lang-option-btn) --- */
+
+.lang-option-btn {
+    width: 100%;
+    text-align: left; 
+    padding: 10px 15px;
+    
+    /* [PERUBAHAN UTAMA UNTUK TOMBOL TIDAK AKTIF] */
+    background-color: transparent; /* Latar belakang transparan */
+    border: 1px solid #333; /* Batas (Border) Hitam */
+    color: #333; /* Warna teks default */
+    
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.2s; /* Transisi yang halus */
+    
+    /* Tampilan Flexbox untuk memisahkan bendera/teks */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.lang-option-btn:hover {
+    /* Efek hover untuk tombol tidak aktif */
+    background-color: #e9ecef; 
+    border-color: #000; 
+}
+
+/* Gaya untuk Bahasa yang Sedang AKTIF */
+.lang-option-btn.active {
+    /* [PERUBAHAN UTAMA UNTUK TOMBOL AKTIF] */
+    background-color: var(--primary-color, #007bff); /* Warna utama aplikasi */
+    color: white; /* Teks putih */
+    font-weight: bold;
+    
+    /* Batas (Border) diatur agar warnanya menyatu dengan background */
+    border: 1px solid var(--primary-color, #007bff); 
+}
+
+.lang-option-btn.active:hover {
+    background-color: var(--primary-color-darker, #0056b3);
+    border-color: var(--primary-color-darker, #0056b3);
+}
+
+/* Pastikan bendera terlihat jelas */
+.lang-option-btn .flag {
+    font-size: 1.5em; 
+}
+
+/* ==================================== */
+/* 19. STYLE TOOLTIP KUSTOM (CUSTOM TITLE STYLE) */
+/* ==================================== */
+[data-tooltip] {
+    position: relative;
+    cursor: pointer; /* Menunjukkan bahwa elemen dapat di-hover */
+}
+
+/* 2. Isi Tooltip (::after) */
+[data-tooltip]::after {
+    content: attr(data-tooltip); /* Mengambil teks dari atribut data-tooltip */
+    
+    /* --- STYLE TAMPILAN --- */
+    background-color: #333; /* Warna background gelap */
+    color: #fff; /* Warna teks putih */
+    font-size: 0.8rem;
+    padding: 5px 8px;
+    border-radius: 4px;
+    white-space: nowrap; /* Mencegah teks terpotong ke bawah */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4); /* Bayangan */
+    z-index: 1020; /* Pastikan selalu di atas */
+    
+    /* --- POSISI TOOLTIP (Di atas tombol) --- */
+    position: absolute;
+    left: 50%; 
+    bottom: calc(100% + 10px); /* Posisikan 10px di atas tombol */
+    transform: translateX(-50%); /* Pusatkan secara horizontal */
+    
+    /* --- EFEK TRANSISI --- */
+    opacity: 0; /* Sembunyikan secara default */
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+/* 3. Panah Tooltip (::before) - Opsional */
+[data-tooltip]::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 5px); /* Posisikan 5px di atas tombol */
+    transform: translateX(-50%);
+    border-width: 5px;
+    border-style: solid;
+    border-color: #333 transparent transparent transparent; /* Warna panah sesuai background */
+    
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+    z-index: 1000;
+}
+.toggle-switch[data-tooltip]::after {
+    /* Membatalkan properti 'bottom' yang memposisikannya di atas */
+    bottom: auto; 
+    /* Mengatur posisi 10px di bawah tombol */
+    top: calc(100% + 10px); 
+}
+
+/* Menargetkan Panah Tooltip (::before) pada Toggle Switch */
+.toggle-switch[data-tooltip]::before {
+    /* Membatalkan properti 'bottom' */
+    bottom: auto;
+    /* Mengatur posisi 5px di bawah tombol */
+    top: calc(100% + 5px); 
+    
+    /* Mengubah arah panah agar menghadap ke atas */
+    /* Transparan | Transparan | Warna Background Tooltip | Transparan */
+    border-color: transparent transparent #333 transparent; 
+}
+
+/* 4. Efek saat HOVER */
+/* Menampilkan tooltip dan panah saat elemen induk di-hover */
+[data-tooltip]:hover::after,
+[data-tooltip]:hover::before {
+    opacity: 1;
+    visibility: visible;
+}
+@media (max-width: 600px) {
+    /* Menargetkan Tooltip Content (teks) */
+    [data-tooltip]::after {
+        opacity: 0 !important;
+        visibility: hidden !important;
+    }
+
+    /* Menargetkan Panah Tooltip (opsional) */
+    [data-tooltip]::before {
+        opacity: 0 !important;
+        visibility: hidden !important;
+    }
+
+    /* Memastikan hover tidak mengubah apapun pada mobile */
+    [data-tooltip]:hover::after,
+    [data-tooltip]:hover::before {
+        opacity: 0 !important;
+        visibility: hidden !important;
+    }
+    .modal-lang{
+    margin-top: 70px;
+    }
+
+    .topnav {
+    display: flex;
+    justify-content: space-between
+    }
+    #topnav-menu-toggle {
+        flex-wrap: nowrap; 
+    }
+}
+
+/* ==================================== */
+/*LIVE DATETIME (CLOCK & CALENDAR)  */
+/* ==================================== */
+.live-datetime-style {
+    /* Gaya Container Utama */
+    display: flex; /* Aktifkan flexbox */
+    flex-direction: row; /* Default: Tanggal dan Jam dalam satu baris */
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #fff; 
+    margin-left: 0; 
+    padding: 0 10px;
+    gap: 15px; /* Jarak antara tanggal dan waktu */
+}
+
+.live-datetime-style .datetime-separator {
+    display: inline; /* Tampilkan pemisah di PC */
+    padding: 0 5px;
+}
+
+.live-datetime-style .live-time {
+    font-family: 'DS-Digital', monospace; /* Terapkan font digital */
+    font-size: 1.1rem; /* Buat sedikit lebih besar dari tanggal */
+    font-weight: normal; /* Font digital biasanya tidak perlu bold */
+    letter-spacing: 1px; /* Tambahkan sedikit jarak antar angka agar lebih terlihat digital */
+    
+    /* Tambahkan efek shadow tipis untuk kesan menyala (opsional) */
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5); 
+}
+
+/* [PENTING] Gaya Font untuk Tanggal */
+.live-datetime-style .live-date {
+    /* Pastikan tanggal menggunakan font standar aplikasi (misal Poppins/Roboto) */
+    font-family: 'Poppins', 'Roboto', sans-serif; 
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* Di dalam @media (max-width: 600px) */
+@media (max-width: 600px) {
+    /* ... (CSS Live DateTime Style sebelumnya) ... */
+    
+    /* Sembunyikan pemisah di mobile karena sudah disusun vertikal */
+    .live-datetime-style .datetime-separator {
+        display: none !important; 
+    }
+}
+
+/* Jika Anda ingin membagi elemen tanggal dan waktu di masa depan, 
+   tambahkan kelas seperti .live-date dan .live-time di JavaScript */
+
+@media (max-width: 600px) {
+    /* [PERBAIKAN] Penempatan Live DateTime di Mobile */
+    .live-datetime-style {
+        /* Posisikan di baris header sebelah kanan judul */
+        flex-basis: auto; 
+        order: 1.5; /* Diletakkan antara Title (order 1) dan Menu Toggle (order 2) */
+        margin-left: auto; /* Mendorong jam ke kanan */
+        font-size: 0.8rem; /* Sedikit lebih kecil di mobile */
+        flex-direction: column; /* [KUNCI] Pecah menjadi dua baris: Tanggal di atas, Waktu di bawah */
+        text-align: right;
+        padding: 0 5px;
+        line-height: 1.1;
+    }
+}
+
+/* ==================================== */
+/* Z-INDEX FIX (URUTAN TUMPUKAN)        */
+/* ==================================== */
+#about-modal{z-index: 1080;}
+#panduan-modal{z-index:1080 ;}
+#language-modal{ z-index: 1080; }
+#download-modal { z-index: 1070; } 
+#filter-modal { z-index: 1060; } 
+#navigation-modal { z-index: 1050; } 
+#biodata-modal { z-index: 1040; }
+#floating-menu-dropdown{ z-index: 999; }
