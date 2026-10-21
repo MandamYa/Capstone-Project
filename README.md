@@ -14,8 +14,13 @@ Aplikasi ini merupakan penyempurnaan prototipe NASI-BARAS berbasis **HTML5, CSS3
 
 | Kolom | Nilai |
 | --- | --- |
+Login sebagai Administrator
 | Nama pengguna | `admin` |
 | Kata sandi | `NasiBaras@2026` |
+
+Login sebagai Pengguna
+| Nama pengguna | `user` |
+| Kata sandi | `user1234` |
 
 **Penting:** Akun tersebut hanya untuk presentasi dan pengujian. Kata sandi demo didistribusikan melalui berkas ini. Login tidak aman untuk sistem operasional sungguhan.
 
