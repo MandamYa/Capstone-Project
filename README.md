@@ -17,7 +17,7 @@ Aplikasi ini merupakan penyempurnaan prototipe NASI-BARAS berbasis **HTML5, CSS3
 Login sebagai Administrator
 | Nama pengguna | `admin` |
 | Kata sandi | `NasiBaras@2026` |
-
+||||
 |Login sebagai Pengguna|
 | Nama pengguna | `user` |
 | Kata sandi | `user1234` |
